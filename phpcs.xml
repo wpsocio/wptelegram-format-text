@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="WPTelegram">
+
+     <!-- Enable colors in report -->
+     <arg name="colors"/>
+
+     <!-- Add source codes in the report -->
+     <arg value="s"/>
+
+     <!-- Load WordPress Coding standards -->
+     <rule ref="WordPress"/>
+
+     <!-- Customize -->
+     <rule ref="WordPress">
+          <!-- Disable File Name warning -->
+          <exclude name="WordPress.Files.FileName" />
+          <!-- Disable short array syntax warning -->
+          <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+          <!-- Disable snake case rule for variables -->
+          <exclude name="WordPress.NamingConventions.ValidVariableName" />
+          <!-- Disable snake case rule for function names -->
+          <exclude name="WordPress.NamingConventions.ValidFunctionName" />
+     </rule>
+     <!-- Disallow Long Array Syntax -->
+     <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+          <type>warning</type>
+     </rule>
+
+     <rule ref="Squiz.Commenting.FunctionComment">                               
+        <properties>
+            <property name="skipIfInheritdoc" value="true"/>
+        </properties>
+    </rule>
+</ruleset>
