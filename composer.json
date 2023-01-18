@@ -1,0 +1,24 @@
+{
+  "name": "wptelegram/format-text",
+  "version": "1.0.0",
+  "description": "HTML to Text converter/formatter for Telegram Bot API",
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "object-calisthenics/phpcs-calisthenics-rules": "*",
+    "phpcompatibility/php-compatibility": "*",
+    "wp-coding-standards/wpcs": "*",
+    "wp-cli/wp-cli-bundle": "*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "composer run set-config"
+    ],
+    "set-config": [
+      "\"vendor/bin/phpcs\" --config-set installed_paths ../../../vendor/wp-coding-standards/wpcs",
+      "\"vendor/bin/phpcs\" --config-set default_standard WordPress"
+    ],
+    "lint": "\"vendor/bin/phpcs\" src/",
+    "lint:skip-warnings": "\"vendor/bin/phpcs\" -n",
+    "lint:fix": "\"vendor/bin/phpcbf\" --standard=phpcs.xml src/"
+  }
+}
