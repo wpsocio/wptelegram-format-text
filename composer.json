@@ -17,8 +17,8 @@
       "\"vendor/bin/phpcs\" --config-set installed_paths ../../../vendor/wp-coding-standards/wpcs",
       "\"vendor/bin/phpcs\" --config-set default_standard WordPress"
     ],
-    "lint": "\"vendor/bin/phpcs\" src/",
-    "lint:skip-warnings": "\"vendor/bin/phpcs\" -n",
+    "lint": "\"vendor/bin/phpcs\" --standard=phpcs.xml src/",
+    "lint:skip-warnings": "\"vendor/bin/phpcs\" --standard=phpcs.xml -n",
     "lint:fix": "\"vendor/bin/phpcbf\" --standard=phpcs.xml src/"
   }
 }
