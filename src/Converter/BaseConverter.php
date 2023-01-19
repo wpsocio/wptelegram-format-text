@@ -81,6 +81,14 @@ abstract class BaseConverter implements ConverterInterface {
 	}
 
 	/**
+	 * Whether we are formatting to text.
+	 */
+	protected function formattingToText() {
+
+		return ! $this->formattingToMarkdown() && ! $this->formattingToHtml();
+	}
+
+	/**
 	 * Whether we are formatting to Markdown.
 	 */
 	protected function formattingToMarkdown() {
@@ -119,6 +127,18 @@ abstract class BaseConverter implements ConverterInterface {
 			return $value;
 		}
 
+		if ( $element->isDescendantOf( [ 'head' ] ) ) {
+			return '';
+		}
+
+		if ( $element->isBlock() ) {
+			$value = "\n" . $value . "\n";
+		}
+
+		if ( $this->formattingToText() ) {
+			return $value;
+		}
+
 		$tag = $element->getTagName();
 
 		$formattingToMd = $this->formattingToMarkdown();
@@ -128,9 +148,6 @@ abstract class BaseConverter implements ConverterInterface {
 		$isTelegramTag = array_key_exists( $tag, $markdownMap );
 
 		if ( ! $isTelegramTag ) {
-			if ( $element->isBlock() ) {
-				$value = "\n" . $value . "\n";
-			}
 			return $value;
 		}
 
@@ -141,9 +158,8 @@ abstract class BaseConverter implements ConverterInterface {
 			return $markdownChar . $value . $markdownChar;
 		}
 
-		if ( $this->formattingToHtml() ) {
-			return sprintf( '<%1$s>%2$s</%1$s>', $tag, $value );
-		}
+		// We are formatting to HTML.
+		return sprintf( '<%1$s>%2$s</%1$s>', $tag, $value );
 	}
 
 	/**
@@ -164,12 +180,7 @@ abstract class BaseConverter implements ConverterInterface {
 	 * {@inheritdoc}
 	 */
 	protected function convertToText( ElementInterface $element ) {
-		$value = trim( $element->getValue() );
-
-		if ( $element->isBlock() ) {
-			$value = "\n" . $value . "\n";
-		}
-		return $value;
+		return $this->convertElement( $element );
 	}
 
 	/**
