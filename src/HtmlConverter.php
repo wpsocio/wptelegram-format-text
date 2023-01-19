@@ -32,13 +32,13 @@ class HtmlConverter implements HtmlConverterInterface {
 			$this->environment = $options;
 		} elseif ( is_array( $options ) ) {
 			$defaults = [
-				'suppress_errors'   => true, // Set to false to show warnings when loading malformed HTML.
-				'list_item_style'   => '-', // Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
-				'table_caption_pos' => 'top', // Set to 'top' or 'bottom' to show <caption> content before or after table, null to suppress.
-				'format_to'         => 'text', // Set to 'HTML', 'Markdown' or 'MarkdownV2'.
-				'relative_links'    => 'clean', // Set to 'preserve' to preserve relative links.
-				'table_cell_sep'    => ' | ', // Set the default separator for each <td> and <th>.
-				'table_row_sep'     => "\n", // Set the default separator for each <tr>.
+				'format_to'           => 'text', // Set to 'HTML', 'Markdown' or 'MarkdownV2'.
+				'list_item_style'     => '-', // Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
+				'relative_links'      => 'clean', // Set to 'preserve' to preserve relative links.
+				'sub_list_item_style' => '◦', // `list_item_style` for nested <ul> and <ol>.
+				'suppress_errors'     => true, // Set to false to show warnings when loading malformed HTML.
+				'table_cell_sep'      => ' | ', // Set the default separator for each <td> and <th>.
+				'table_row_sep'       => "\n", // Set the default separator for each <tr>.
 			];
 
 			$this->environment = Environment::createDefaultEnvironment( $defaults );
@@ -118,6 +118,8 @@ class HtmlConverter implements HtmlConverterInterface {
 		$html = str_replace( "\r", "\n", $html );
 		// remove <script> and <style> tags.
 		$html = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $html );
+		// Convert <br> to \n.
+		$html = preg_replace( '@<br[^>]*?/?>@si', "\n", $html );
 
 		return $html;
 	}

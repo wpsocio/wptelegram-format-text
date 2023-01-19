@@ -18,7 +18,7 @@ class ListBlockConverter extends BaseConverter {
 	 * {@inheritdoc}
 	 */
 	public function convert( ElementInterface $element ) {
-		return $element->getValue() . "\n";
+		return "\n" . $element->getValue() . "\n";
 	}
 
 	/**
