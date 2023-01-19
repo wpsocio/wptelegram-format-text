@@ -12,7 +12,7 @@ namespace WPTelegram\FormatText\Converter;
  */
 class Utils {
 
-	public const PLACEHOLDERS = [
+	const PLACEHOLDERS = [
 		'{:space:}' => ' ',
 		'{:tab:}'   => "\t",
 	];

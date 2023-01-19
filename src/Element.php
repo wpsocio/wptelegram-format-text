@@ -16,7 +16,7 @@ use DOMText;
  */
 class Element implements ElementInterface {
 
-	public const BLOCK_ELEMENTS = [
+	const BLOCK_ELEMENTS = [
 		'article',
 		'aside',
 		'blockquote',
@@ -118,7 +118,7 @@ class Element implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public function getValue() {
-		return $this->node->nodeValue ?? '';
+		return isset( $this->node->nodeValue ) ? $this->node->nodeValue : '';
 	}
 
 	/**

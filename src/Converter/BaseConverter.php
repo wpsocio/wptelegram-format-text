@@ -15,7 +15,7 @@ use WPTelegram\FormatText\ElementInterface;
  */
 abstract class BaseConverter implements ConverterInterface {
 
-	public const HTML_TO_MARKDOWN_V1_MAP = [
+	const HTML_TO_MARKDOWN_V1_MAP = [
 		// bold.
 		'b'      => '*',
 		'strong' => '*',
@@ -27,7 +27,7 @@ abstract class BaseConverter implements ConverterInterface {
 		'pre'    => '```',
 	];
 
-	public const HTML_TO_MARKDOWN_V2_MAP = [
+	const HTML_TO_MARKDOWN_V2_MAP = [
 		// underline.
 		'u'      => '__',
 		'ins'    => '__',
