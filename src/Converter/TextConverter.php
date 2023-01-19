@@ -18,7 +18,7 @@ class TextConverter extends BaseConverter {
 	/**
 	 * The tags that don't have text nodes as children.
 	 */
-	public const TAGS_WITH_NO_TEXT = [
+	const TAGS_WITH_NO_TEXT = [
 		'col',
 		'colgroup',
 		'ol',
@@ -53,7 +53,7 @@ class TextConverter extends BaseConverter {
 			if ( $isLinkOrCode || $willParentEscape ) {
 				$escape = false;
 			} else {
-				$escapeEntity = isset( self::HTML_TO_MARKDOWN_V1_MAP[ $parentTag ] ) ? self::HTML_TO_MARKDOWN_V1_MAP[ $parentTag ] : '';
+				$escapeEntity = array_key_exists( $parentTag, self::HTML_TO_MARKDOWN_V1_MAP ) ? self::HTML_TO_MARKDOWN_V1_MAP[ $parentTag ] : '';
 			}
 		}
 

@@ -12,7 +12,7 @@ namespace WPTelegram\FormatText\Converter;
  */
 class DefaultConverter extends BaseConverter {
 
-	public const DEFAULT_CONVERTER = '_default';
+	const DEFAULT_CONVERTER = '_default';
 
 	/**
 	 * {@inheritdoc}

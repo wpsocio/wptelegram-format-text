@@ -19,7 +19,7 @@ class TableConverter extends BaseConverter {
 	 *
 	 * @param ElementInterface $element The element to convert.
 	 */
-	public function preConvert( ElementInterface $element ): void {
+	public function preConvert( ElementInterface $element ) {
 		$tag = $element->getTagName();
 		// Only table cells and caption are allowed to contain content.
 		// Remove all text between other table elements.

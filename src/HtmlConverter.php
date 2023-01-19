@@ -129,7 +129,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 *
 	 * @return DOMDocument The DOMDocument version of the html
 	 */
-	private function createDOMDocument( string $html ) {
+	private function createDOMDocument( $html ) {
 		$document = new DOMDocument();
 
 		if ( $this->getConfig()->getOption( 'suppress_errors' ) ) {

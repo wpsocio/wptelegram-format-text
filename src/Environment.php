@@ -44,7 +44,7 @@ final class Environment {
 	 *
 	 * @param array<string, mixed> $config Configuration.
 	 */
-	public function __construct( array $config = [] ) {
+	public function __construct( $config = [] ) {
 		$this->config = new Configuration( $config );
 		$this->addConverter( new DefaultConverter() );
 	}
@@ -78,7 +78,7 @@ final class Environment {
 	 *
 	 * @return ConverterInterface
 	 */
-	public function getConverterByTag( string $tag ) {
+	public function getConverterByTag( $tag ) {
 		if ( isset( $this->converters[ $tag ] ) ) {
 			return $this->converters[ $tag ];
 		}
@@ -93,7 +93,7 @@ final class Environment {
 	 *
 	 * @return Environment
 	 */
-	public static function createDefaultEnvironment( array $config = [] ) {
+	public static function createDefaultEnvironment( $config = [] ) {
 		$environment = new static( $config );
 
 		$environment->addConverter( new CodeConverter() );
