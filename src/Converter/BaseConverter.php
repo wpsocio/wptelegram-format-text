@@ -81,6 +81,13 @@ abstract class BaseConverter implements ConverterInterface {
 	}
 
 	/**
+	 * Get the supported rquivalent tags for MarkdownV1.
+	 */
+	protected function getV1SupportedTags() {
+		return array_merge( array_keys( self::HTML_TO_MARKDOWN_V1_MAP ), [ 'a' ] );
+	}
+
+	/**
 	 * Whether we are formatting to text.
 	 */
 	protected function formattingToText() {
