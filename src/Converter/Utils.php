@@ -62,4 +62,15 @@ class Utils {
 
 		return htmlspecialchars( $value, ENT_NOQUOTES, 'UTF-8' );
 	}
+
+	/**
+	 * Check if PHP version is at least $version.
+	 *
+	 * @param  string $version PHP version string to compare.
+	 *
+	 * @return bool Result of comparison check.
+	 */
+	public static function phpAtLeast( $version ) {
+		return version_compare( PHP_VERSION, $version, '>=' );
+	}
 }

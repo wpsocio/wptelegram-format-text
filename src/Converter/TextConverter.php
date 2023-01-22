@@ -90,7 +90,7 @@ class TextConverter extends BaseConverter {
 
 		// Don't strip tags inside pre and code.
 		if ( ! $element->isDescendantOf( [ 'pre', 'code' ] ) ) {
-			$value = strip_tags( $value ); // phpcs:ignore
+			$value = strip_tags( $value );
 		}
 
 		return $value;
