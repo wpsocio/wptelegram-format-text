@@ -13,8 +13,8 @@
  * Version:           999.999.999
  * Author:            WP Socio
  * Author URI:        https://github.com/wpsocio
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       wptelegram
  * Domain Path:       /languages
  */
@@ -41,7 +41,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 	 * @category  WordPress_Plugin Addon
 	 * @package   WPTelegram\FormatText
 	 * @author    WPTelegram team
-	 * @license   GPL-2.0+
+	 * @license   GPL-3.0+
 	 * @link      https://t.me/WPTelegram
 	 */
 	class WPLoader_1_0_0 {
@@ -68,7 +68,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 *
 		 * @var WPLoader_1_0_0
 		 */
-		public static $single_instance = null;
+		private static $instance = null;
 
 		/**
 		 * Creates/returns the single instance WPLoader_1_0_0 object
@@ -77,10 +77,10 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 * @return WPLoader_1_0_0 Single instance object
 		 */
 		public static function initiate() {
-			if ( null === self::$single_instance ) {
-				self::$single_instance = new self();
+			if ( null === self::$instance ) {
+				self::$instance = new self();
 			}
-			return self::$single_instance;
+			return self::$instance;
 		}
 
 		/**
