@@ -42,7 +42,7 @@ class TextConverter extends BaseConverter {
 		$parentTag = $parent->getTagName();
 
 		$isLinkOrCode     = $element->isDescendantOf( [ 'code', 'a', 'pre' ] );
-		$willParentEscape = $parent->isDescendantOf( array_merge( array_keys( self::HTML_TO_MARKDOWN_V1_MAP ), [ 'a' ] ) );
+		$willParentEscape = $parent->isDescendantOf( $this->getV1SupportedTags() );
 		$isMdV1Format     = 'v1' === $this->formattingToMarkdown();
 
 		$escape       = true;
@@ -90,7 +90,7 @@ class TextConverter extends BaseConverter {
 
 		// Don't strip tags inside pre and code.
 		if ( ! $element->isDescendantOf( [ 'pre', 'code' ] ) ) {
-			$value = strip_tags( $value ); // phpcs:ignore
+			$value = strip_tags( $value );
 		}
 
 		return $value;

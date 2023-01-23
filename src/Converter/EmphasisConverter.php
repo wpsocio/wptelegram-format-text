@@ -45,6 +45,14 @@ class EmphasisConverter extends BaseConverter {
 			return $value;
 		}
 
+		$isNestedTag  = $element->isDescendantOf( $this->getV1SupportedTags() );
+		$isMdV1Format = 'v1' === $this->formattingToMarkdown();
+
+		// Markdown v1 doesn't support nested tags.
+		if ( $isMdV1Format && $isNestedTag ) {
+			return $value;
+		}
+
 		$style = 'em' === $tag ? '_' : '*';
 
 		$prefix = ltrim( $value ) !== $value ? ' ' : '';

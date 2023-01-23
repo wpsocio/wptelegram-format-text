@@ -25,11 +25,11 @@ $text = $converter->convert( $html );
 
 **NOTES:**
 
--   Do not require conditionally, like `if ( class_exists() )`.
--   It's safe to include it directly.
--   Library takes care of its multiple versions being loaded.
--   It always loads the latest version.
+- Do not require conditionally, like `if ( class_exists() )`.
+- It's safe to include it directly.
+- Library takes care of its multiple versions being loaded.
+- It always loads the latest version.
 
 ## Requirements
 
--   `PHP >= 7.0`
+- `PHP >= 7.0`

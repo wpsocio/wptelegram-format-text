@@ -1,16 +1,25 @@
 <?php
 /**
- * The loader.
+ * The main plugin file.
  *
- * The class which loads the latest version of the library.
+ * @link              https://wpsocio.com
+ * @since             1.0.0
+ * @package           WPTelegram\FormatText
  *
- * @link       https://wpsocio.com
- * @since      1.0.0
- *
- * @package    WPTelegram\FormatText
- * @subpackage WPTelegram\FormatText
+ * @wordpress-plugin
+ * Plugin Name:       WP Telegram Format Text
+ * Plugin URI:        https://github.com/wpsocio/wptelegram-format-text
+ * Description:       ❌ DO NOT DELETE ❌ WP Loader for WP Telegram Format Text.
+ * Version:           999.999.999
+ * Author:            WP Socio
+ * Author URI:        https://github.com/wpsocio
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * Text Domain:       wptelegram
+ * Domain Path:       /languages
  */
 
+// Namespace doesn't really matter here.
 namespace WPTelegram\FormatText;
 
 // If this file is called directly, abort.
@@ -20,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 	/**
-	 * Handles checking for and loading the newest version of WPTelegram\FormatText
+	 * Handles checking for and loading the newest version of the library
 	 *
 	 * Inspired from CMB2 loading technique
 	 * to ensure that only the latest version is loaded
@@ -32,7 +41,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 	 * @category  WordPress_Plugin Addon
 	 * @package   WPTelegram\FormatText
 	 * @author    WPTelegram team
-	 * @license   GPL-2.0+
+	 * @license   GPL-3.0+
 	 * @link      https://t.me/WPTelegram
 	 */
 	class WPLoader_1_0_0 {
@@ -59,7 +68,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 *
 		 * @var WPLoader_1_0_0
 		 */
-		public static $single_instance = null;
+		private static $instance = null;
 
 		/**
 		 * Creates/returns the single instance WPLoader_1_0_0 object
@@ -68,47 +77,44 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 * @return WPLoader_1_0_0 Single instance object
 		 */
 		public static function initiate() {
-			if ( null === self::$single_instance ) {
-				self::$single_instance = new self();
+			if ( null === self::$instance ) {
+				self::$instance = new self();
 			}
-			return self::$single_instance;
+			return self::$instance;
 		}
 
 		/**
 		 * Starts the version checking process.
 		 * Creates WPTELEGRAM_FORMAT_TEXT_LOADED definition for early detection by other scripts
 		 *
-		 * Hooks WPTelegram\FormatText inclusion to the after_setup_theme hook on a high priority which decrements
+		 * Hooks the library inclusion to the after_setup_theme hook on a high priority which decrements
 		 * (increasing the priority) with each version release.
 		 *
 		 * @since 1.0.0
 		 */
 		private function __construct() {
 			/**
-			 * A constant you can use to check if WPTelegram\FormatText is loaded
-			 * for your plugins/themes with WPTelegram\FormatText dependency
-			 */
-			if ( ! defined( 'WPTELEGRAM_FORMAT_TEXT_LOADED' ) ) {
-				define( 'WPTELEGRAM_FORMAT_TEXT_LOADED', self::PRIORITY );
-			}
-
-			/**
 			 * Use after_setup_theme hook instead of init
-			 * to make the API library available during init
+			 * to make the library available during init
 			 */
-			add_action( 'after_setup_theme', [ $this, 'init_wptelegram_format_text' ], self::PRIORITY );
+			add_action( 'after_setup_theme', [ $this, 'init' ], self::PRIORITY );
 		}
 
 		/**
-		 * A final check if WPTelegram\FormatText exists before kicking off our WPTelegram\FormatText loading.
+		 * A final check if the library is already loaded before kicking off our loading.
 		 * WPTELEGRAM_FORMAT_TEXT_VERSION constant is set at this point.
 		 *
 		 * @since  1.0.0
 		 */
-		public function init_wptelegram_format_text() {
-			if ( class_exists( FormatText\API::class, false ) ) {
+		public function init() {
+			if ( defined( 'WPTELEGRAM_FORMAT_TEXT_LOADED' ) ) {
 				return;
 			}
+
+			/**
+			 * A constant you can use to check if the library is loaded
+			 */
+			define( 'WPTELEGRAM_FORMAT_TEXT_LOADED', self::PRIORITY );
 
 			if ( ! defined( 'WPTELEGRAM_FORMAT_TEXT_VERSION' ) ) {
 				define( 'WPTELEGRAM_FORMAT_TEXT_VERSION', self::VERSION );
@@ -119,7 +125,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 			}
 
 			// Now kick off the class autoloader.
-			spl_autoload_register( [ __CLASS__, 'wptelegram_format_text_autoload_classes' ] );
+			spl_autoload_register( [ __CLASS__, 'autoload_classes' ] );
 		}
 
 		/**
@@ -128,7 +134,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 * @since  1.0.0
 		 * @param  string $class_name Name of the class being requested.
 		 */
-		public static function wptelegram_format_text_autoload_classes( $class_name ) {
+		public static function autoload_classes( $class_name ) {
 			$namespace = 'WPTelegram\FormatText';
 
 			if ( 0 !== strpos( $class_name, $namespace ) ) {

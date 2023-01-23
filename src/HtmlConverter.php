@@ -32,6 +32,7 @@ class HtmlConverter implements HtmlConverterInterface {
 			$this->environment = $options;
 		} elseif ( is_array( $options ) ) {
 			$defaults = [
+				'char_set'            => 'auto', // Set the default character set.
 				'format_to'           => 'text', // Set to 'HTML', 'Markdown' or 'MarkdownV2'.
 				'list_item_style'     => '-', // Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
 				'relative_links'      => 'clean', // Set to 'preserve' to preserve relative links.
@@ -86,6 +87,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @return string The Markdown version of the html
 	 */
 	public function convert( $html ) {
+		// DOMDocument doesn't support empty value and throws an error.
 		if ( trim( $html ) === '' ) {
 			return '';
 		}
@@ -121,7 +123,7 @@ class HtmlConverter implements HtmlConverterInterface {
 		// Convert <br> to \n.
 		$html = preg_replace( '@<br[^>]*?/?>@si', "\n", $html );
 
-		return $html;
+		return trim( $html );
 	}
 
 	/**
@@ -134,16 +136,47 @@ class HtmlConverter implements HtmlConverterInterface {
 	private function createDOMDocument( $html ) {
 		$document = new DOMDocument();
 
-		if ( $this->getConfig()->getOption( 'suppress_errors' ) ) {
+		// use mb_convert_encoding for legacy versions of php.
+		if ( ! Utils::phpAtLeast( '8.1' ) && mb_detect_encoding( $html, 'UTF-8', true ) ) {
+			$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+		}
+
+		$suppress_errors = $this->getConfig()->getOption( 'suppress_errors' );
+
+		// If the HTML does not start with a tag, add <body> tag.
+		if ( 0 !== strpos( trim( $html ), '<' ) ) {
+			$html = '<body>' . $html . '</body>';
+		}
+
+		$header = '';
+		// use char sets for modern versions of php.
+		if ( Utils::phpAtLeast( '8.1' ) ) {
+			// use specified char_set, or auto detect if not set.
+			$char_set = $this->getConfig()->getOption( 'char_set', 'auto' );
+			if ( 'auto' === $char_set ) {
+				$char_set = mb_detect_encoding( $html );
+			} elseif ( strpos( $char_set, ',' ) ) {
+				mb_detect_order( $char_set );
+				$char_set = mb_detect_encoding( $html );
+			}
+			// turn off error detection for Windows-1252 legacy html.
+			if ( strpos( $char_set, '1252' ) ) {
+				$suppress_errors = true;
+			}
+			$header = '<?xml version="1.0" encoding="' . $char_set . '">';
+		}
+
+		if ( $suppress_errors ) {
 			// Suppress conversion errors.
+			$document->strictErrorChecking = false;
+			$document->recover             = true;
+			$document->xmlStandalone       = true;
 			libxml_use_internal_errors( true );
 		}
 
-		// Hack to load utf-8 HTML.
-		$document->loadHTML( '<?xml encoding="UTF-8">' . $html );
-		$document->encoding = 'UTF-8';
+		$document->loadHTML( $header . $html );
 
-		if ( $this->getConfig()->getOption( 'suppress_errors' ) ) {
+		if ( $suppress_errors ) {
 			libxml_clear_errors();
 		}
 
