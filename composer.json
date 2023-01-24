@@ -3,11 +3,8 @@
 	"version": "1.0.0",
 	"description": "HTML to Text converter/formatter for Telegram Bot API",
 	"require-dev": {
-		"dealerdirect/phpcodesniffer-composer-installer": "*",
-		"phpcompatibility/php-compatibility": "*",
-		"phpunit/phpunit": "9",
 		"wp-coding-standards/wpcs": "*",
-		"wp-cli/wp-cli-bundle": "*"
+		"phpunit/phpunit": "9"
 	},
 	"autoload": {
 		"psr-4": {
