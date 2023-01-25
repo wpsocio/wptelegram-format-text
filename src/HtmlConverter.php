@@ -45,7 +45,7 @@ class HtmlConverter implements HtmlConverterInterface {
 				// Set to false to keep display:none elements.
 				'remove_display_none' => true,
 				// A callable to determine if a node should be converted.
-				'should_convert'      => null,
+				'should_convert_cb'   => null,
 				// `list_item_style` for nested <ul> and <ol>.
 				'sub_list_item_style' => '◦',
 				// Set to false to show warnings when loading malformed HTML.
@@ -238,36 +238,36 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @return boolean Whether the element should be converted.
 	 */
 	public function shouldConvert( ElementInterface $element ) {
-		$shouldConvert = $this->getConfig()->getOption( 'should_convert', null );
-
-		// Give priority to the shouldConvert callback.
-		if ( is_callable( $shouldConvert ) ) {
-			$shouldConvert = call_user_func( $shouldConvert, $element );
-
-			if ( is_bool( $shouldConvert ) ) {
-				return $shouldConvert;
-			}
-		}
+		$shouldConvert = true;
 
 		$elementsToRemove = $this->getConfig()->getOption( 'elements_to_remove', [] );
 
 		// If the element is in the list of elements to remove, don't convert it.
 		if ( in_array( $element->getTagName(), $elementsToRemove, true ) ) {
-			return false;
+			$shouldConvert = false;
 		}
 
-		if ( $this->getConfig()->getOption( 'remove_display_none', true ) ) {
+		if ( $shouldConvert && $this->getConfig()->getOption( 'remove_display_none', true ) ) {
 			$style = $element->getAttribute( 'style' );
 
 			if ( ! empty( $style ) ) {
 				$style = Utils::parseStyle( $style );
 				if ( isset( $style['display'] ) && 'none' === $style['display'] ) {
-					return false;
+					$shouldConvert = false;
 				}
 			}
 		}
 
-		return true;
+		$shouldConvertCb = $this->getConfig()->getOption( 'should_convert_cb', null );
+
+		// Have shouldConvert callback the final say.
+		if ( is_callable( $shouldConvertCb ) ) {
+			$shouldConvertVal = call_user_func( $shouldConvertCb, $element, $shouldConvert );
+
+			$shouldConvert = is_bool( $shouldConvertVal ) ? $shouldConvertVal : $shouldConvert;
+		}
+
+		return $shouldConvert;
 	}
 
 	/**
