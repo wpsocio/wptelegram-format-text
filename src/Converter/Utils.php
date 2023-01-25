@@ -73,4 +73,33 @@ class Utils {
 	public static function phpAtLeast( $version ) {
 		return version_compare( PHP_VERSION, $version, '>=' );
 	}
+
+	/**
+	 * Parse style attribute
+	 *
+	 * @param string $style The style attribute.
+	 *
+	 * @return array The style attribute as an array.
+	 */
+	public static function parseStyle( $style ) {
+		$style_array = [];
+
+		$parts = explode( ';', $style );
+
+		foreach ( $parts as $part ) {
+			$part = trim( $part );
+
+			if ( empty( $part ) ) {
+				continue;
+			}
+
+			list( $key, $value ) = array_map( 'trim', explode( ':', $part, 2 ) );
+
+			if ( ! empty( $key ) ) {
+				$style_array[ $key ] = $value;
+			}
+		}
+
+		return $style_array;
+	}
 }

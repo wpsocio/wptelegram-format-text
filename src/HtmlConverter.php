@@ -32,14 +32,28 @@ class HtmlConverter implements HtmlConverterInterface {
 			$this->environment = $options;
 		} elseif ( is_array( $options ) ) {
 			$defaults = [
-				'char_set'            => 'auto', // Set the default character set.
-				'format_to'           => 'text', // Set to 'HTML', 'Markdown' or 'MarkdownV2'.
-				'list_item_style'     => '-', // Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
-				'relative_links'      => 'clean', // Set to 'preserve' to preserve relative links.
-				'sub_list_item_style' => '◦', // `list_item_style` for nested <ul> and <ol>.
-				'suppress_errors'     => true, // Set to false to show warnings when loading malformed HTML.
-				'table_cell_sep'      => ' | ', // Set the default separator for each <td> and <th>.
-				'table_row_sep'       => "\n", // Set the default separator for each <tr>.
+				// Set the default character set.
+				'char_set'            => 'auto',
+				// An array of elements to remove.
+				'elements_to_remove'  => [ 'form' ],
+				// Set to 'HTML', 'Markdown' or 'MarkdownV2'.
+				'format_to'           => 'text',
+				// Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
+				'list_item_style'     => '-',
+				// Set to 'preserve' to preserve relative links.
+				'relative_links'      => 'clean',
+				// Set to false to keep display:none elements.
+				'remove_display_none' => true,
+				// A callable to determine if a node should be converted.
+				'should_convert'      => null,
+				// `list_item_style` for nested <ul> and <ol>.
+				'sub_list_item_style' => '◦',
+				// Set to false to show warnings when loading malformed HTML.
+				'suppress_errors'     => true,
+				// Set the default separator for each <td> and <th>.
+				'table_cell_sep'      => ' | ',
+				// Set the default separator for each <tr>.
+				'table_row_sep'       => "\n",
 			];
 
 			$this->environment = Environment::createDefaultEnvironment( $defaults );
@@ -209,11 +223,51 @@ class HtmlConverter implements HtmlConverterInterface {
 		}
 
 		// Now that child nodes have been converted, convert the original node.
-		$output = $this->convertElement( $element );
+		$output = $this->shouldConvert( $element ) ? $this->convertElement( $element ) : '';
 
 		$element->setFinalOutput( $output );
 
 		return $output;
+	}
+
+	/**
+	 * Whether the element should be converted
+	 *
+	 * @param ElementInterface $element The element to check.
+	 *
+	 * @return boolean Whether the element should be converted.
+	 */
+	public function shouldConvert( ElementInterface $element ) {
+		$shouldConvert = $this->getConfig()->getOption( 'should_convert', null );
+
+		// Give priority to the shouldConvert callback.
+		if ( is_callable( $shouldConvert ) ) {
+			$shouldConvert = call_user_func( $shouldConvert, $element );
+
+			if ( is_bool( $shouldConvert ) ) {
+				return $shouldConvert;
+			}
+		}
+
+		$elementsToRemove = $this->getConfig()->getOption( 'elements_to_remove', [] );
+
+		// If the element is in the list of elements to remove, don't convert it.
+		if ( in_array( $element->getTagName(), $elementsToRemove, true ) ) {
+			return false;
+		}
+
+		if ( $this->getConfig()->getOption( 'remove_display_none', true ) ) {
+			$style = $element->getAttribute( 'style' );
+
+			if ( ! empty( $style ) ) {
+				$style = Utils::parseStyle( $style );
+				if ( isset( $style['display'] ) && 'none' === $style['display'] ) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
