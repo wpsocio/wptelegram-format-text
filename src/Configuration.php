@@ -34,7 +34,7 @@ class Configuration {
 	 * @param array<string, mixed> $config Configuration.
 	 */
 	public function merge( $config = [] ) {
-		$this->config = array_replace_recursive( $this->config, $config );
+		$this->config = array_merge( $this->config, $config );
 	}
 
 	/**
