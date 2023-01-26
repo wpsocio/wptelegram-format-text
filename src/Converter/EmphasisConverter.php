@@ -18,6 +18,8 @@ class EmphasisConverter extends BaseConverter {
 	 * Get the normalized tag name.
 	 *
 	 * @param ElementInterface|null $element The element.
+	 *
+	 * @return string The normalized tag name.
 	 */
 	protected function getNormTag( $element ) {
 		if ( null !== $element && ! $element->isText() ) {

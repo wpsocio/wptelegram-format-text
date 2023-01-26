@@ -54,12 +54,12 @@ class CodeConverter extends BaseConverter {
 	/**
 	 * Get the code content.
 	 *
-	 * @param ElementInterface $element The element that is being processed.
-	 * @param bool             $removeTag Whether to remove the code tags or not.
+	 * @param ElementInterface $element   The element that is being processed.
+	 * @param boolean          $removeTag Whether to remove the code tags or not.
 	 *
 	 * @return string The code content.
 	 */
-	private function getCodeContent( ElementInterface $element, $removeTag = true ) {
+	private function getCodeContent( ElementInterface $element, bool $removeTag = true ) {
 		$code = html_entity_decode( $element->getChildrenAsString() );
 
 		if ( $removeTag ) {
@@ -76,11 +76,11 @@ class CodeConverter extends BaseConverter {
 	 * should be a block
 	 *
 	 * @param ElementInterface $element The element that is being processed.
-	 * @param string           $code The code to be highlighted.
+	 * @param string           $code    The code to be highlighted.
 	 *
-	 * @return bool A boolean value.
+	 * @return boolean A boolean value.
 	 */
-	private function shouldBeBlock( ElementInterface $element, $code ) {
+	private function shouldBeBlock( ElementInterface $element, string $code ) {
 		$parent = $element->getParent();
 		if ( null !== $parent && $parent->getTagName() === 'pre' ) {
 			return true;

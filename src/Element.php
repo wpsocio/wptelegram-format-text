@@ -187,11 +187,12 @@ class Element implements ElementInterface {
 	/**
 	 * Get the next node in the DOM tree.
 	 *
-	 * @param DOMNode $node The node to start from.
+	 * @param DOMNode $node          The node to start from.
 	 * @param boolean $checkChildren Whether to check the children of the node.
-	 * @return DOMNode|null
+	 *
+	 * @return DOMNode|null The next node.
 	 */
-	private function getNextNode( DOMNode $node, $checkChildren = true ) {
+	private function getNextNode( DOMNode $node, bool $checkChildren = true ) {
 		if ( $checkChildren && $node->firstChild ) {
 			return $node->firstChild;
 		}
@@ -282,7 +283,7 @@ class Element implements ElementInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getAttribute( $name ) {
+	public function getAttribute( string $name ) {
 		if ( $this->node instanceof DOMElement ) {
 			return $this->node->getAttribute( $name );
 		}
@@ -304,7 +305,7 @@ class Element implements ElementInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setFinalOutput( $content ) {
+	public function setFinalOutput( string $content ) {
 		if ( ! $this->node->ownerDocument || ! $this->node->parentNode ) {
 			return;
 		}
@@ -317,6 +318,8 @@ class Element implements ElementInterface {
 	 * Get the next element node.
 	 *
 	 * @param DOMNode $node The node to start from.
+	 *
+	 * @return DOMNode|null The next element node.
 	 */
 	private function getCachedNextElement( DOMNode $node ) {
 		$next = $node->nextSibling;

@@ -11,27 +11,29 @@ interface ElementInterface {
 
 	/**
 	 * Get the DOM Node.
+	 *
+	 * @return DOMNode - The DOM Node.
 	 */
 	public function getNode();
 
 	/**
 	 * Check if the element is a block element
 	 *
-	 * @return bool - Whether the element is a block element
+	 * @return boolean - Whether the element is a block element
 	 */
 	public function isBlock();
 
 	/**
 	 * Check if the element is a text element
 	 *
-	 * @return bool - Whether the element is a text element
+	 * @return boolean - Whether the element is a text element
 	 */
 	public function isText();
 
 	/**
 	 * Check if the element is whitespace
 	 *
-	 * @return bool - Whether the element is whitespace
+	 * @return boolean - Whether the element is whitespace
 	 */
 	public function isWhitespace();
 
@@ -52,7 +54,7 @@ interface ElementInterface {
 	/**
 	 * Check if the element has a parent
 	 *
-	 * @return bool - Whether the element has a parent
+	 * @return boolean - Whether the element has a parent
 	 */
 	public function hasParent();
 
@@ -80,15 +82,15 @@ interface ElementInterface {
 	/**
 	 * Check if the element is a descendant of an element with the given tag name(s)
 	 *
-	 * @param string|string[] $tagNames - The tag name(s) to check for.
-	 * @return bool - Whether the element is a descendant of an element with the given tag name(s)
+	 * @param string|string[] $tagNames The tag name(s) to check for.
+	 * @return boolean - Whether the element is a descendant of an element with the given tag name(s)
 	 */
 	public function isDescendantOf( $tagNames );
 
 	/**
 	 * Check if the element has children
 	 *
-	 * @return bool - Whether the element has children
+	 * @return boolean - Whether the element has children
 	 */
 	public function hasChildren();
 
@@ -109,7 +111,7 @@ interface ElementInterface {
 	/**
 	 * Get the element's position among its siblings
 	 *
-	 * @return int - The element's position among its siblings
+	 * @return integer - The element's position among its siblings
 	 */
 	public function getSiblingPosition();
 
@@ -122,26 +124,32 @@ interface ElementInterface {
 
 	/**
 	 * Used to determine the level of the list item.
+	 *
+	 * @return integer - The level of the list item.
 	 */
 	public function getListItemLevel();
 
 	/**
 	 * Get the attribute by name
 	 *
-	 * @param string $name - The name of the attribute.
-	 * @return string - The value of the attribute
+	 * @param string $name The name of the attribute.
+	 * @return string The value of the attribute
 	 */
-	public function getAttribute( $name);
+	public function getAttribute( string $name );
 
 	/**
 	 * Set the final output for this node.
 	 *
 	 * @param string $content The final output.
+	 *
+	 * @return void
 	 */
-	public function setFinalOutput( $content );
+	public function setFinalOutput( string $content );
 
 	/**
 	 * Get the next element node.
+	 *
+	 * @return ElementInterface|null
 	 */
 	public function getNextElement();
 }

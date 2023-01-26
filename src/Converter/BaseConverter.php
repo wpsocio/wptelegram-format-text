@@ -82,6 +82,8 @@ abstract class BaseConverter implements ConverterInterface {
 
 	/**
 	 * Get the supported rquivalent tags for MarkdownV1.
+	 *
+	 * @return string[] An array of the supported tags
 	 */
 	protected function getV1SupportedTags() {
 		return array_merge( array_keys( self::HTML_TO_MARKDOWN_V1_MAP ), [ 'a' ] );
@@ -89,6 +91,8 @@ abstract class BaseConverter implements ConverterInterface {
 
 	/**
 	 * Whether we are formatting to text.
+	 *
+	 * @return boolean Whether we are formatting to text.
 	 */
 	protected function formattingToText() {
 
@@ -97,6 +101,8 @@ abstract class BaseConverter implements ConverterInterface {
 
 	/**
 	 * Whether we are formatting to Markdown.
+	 *
+	 * @return string|false - The version of Markdown or false.
 	 */
 	protected function formattingToMarkdown() {
 		$formatTo = $this->config->getOption( 'format_to' );
@@ -114,6 +120,8 @@ abstract class BaseConverter implements ConverterInterface {
 
 	/**
 	 * Whether we are formatting to HTML.
+	 *
+	 * @return boolean Whether we are formatting to HTML.
 	 */
 	protected function formattingToHtml() {
 		$formatTo = $this->config->getOption( 'format_to' );
@@ -124,7 +132,9 @@ abstract class BaseConverter implements ConverterInterface {
 	/**
 	 * Convert the given element.
 	 *
-	 * @param ElementInterface $element - The element to convert.
+	 * @param ElementInterface $element The element to convert.
+	 *
+	 * @return string The converted element.
 	 */
 	private function convertElement( ElementInterface $element ) {
 
@@ -198,7 +208,7 @@ abstract class BaseConverter implements ConverterInterface {
 	 *
 	 * @return string The escaped text.
 	 */
-	protected function escapeMarkdownChars( $text, $parentEntity = '' ) {
+	protected function escapeMarkdownChars( string $text, string $parentEntity = '' ) {
 
 		$formattingToMarkdown = $this->formattingToMarkdown();
 

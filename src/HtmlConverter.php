@@ -94,13 +94,9 @@ class HtmlConverter implements HtmlConverterInterface {
 	}
 
 	/**
-	 * Convert the given $html
-	 *
-	 * @param string $html The html to convert.
-	 *
-	 * @return string The Markdown version of the html
+	 * {@inheritdoc}
 	 */
-	public function convert( $html ) {
+	public function convert( string $html ) {
 		// DOMDocument doesn't support empty value and throws an error.
 		if ( trim( $html ) === '' ) {
 			return '';
@@ -123,7 +119,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @param string $html The html to prepare.
 	 * @return string The prepared html.
 	 */
-	protected function prepareHtml( $html ) {
+	protected function prepareHtml( string $html ) {
 
 		// replace &nbsp; with spaces.
 		$html = str_replace( '&nbsp;', ' ', $html );
@@ -147,7 +143,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 *
 	 * @return DOMDocument The DOMDocument version of the html
 	 */
-	private function createDOMDocument( $html ) {
+	private function createDOMDocument( string $html ) {
 		$document = new DOMDocument();
 
 		// use mb_convert_encoding for legacy versions of php.
@@ -206,6 +202,8 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * starting with the innermost element and working up to the outermost element.
 	 *
 	 * @param ElementInterface $element The element to convert.
+	 *
+	 * @return string The children converted.
 	 */
 	private function convertChildren( ElementInterface $element ) {
 
@@ -296,7 +294,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 *
 	 * @return string The clean text.
 	 */
-	protected function cleanUp( $input ) {
+	protected function cleanUp( string $input ) {
 		$output = $input;
 
 		// remove leading and trailing spaces on each line.
@@ -322,7 +320,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 *
 	 * @return $this
 	 */
-	public function setOptions( $options ) {
+	public function setOptions( array $options ) {
 		$config = $this->getConfig();
 
 		foreach ( $options as $key => $option ) {

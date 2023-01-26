@@ -105,6 +105,8 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 * WPTELEGRAM_FORMAT_TEXT_VERSION constant is set at this point.
 		 *
 		 * @since  1.0.0
+		 *
+		 * @return void
 		 */
 		public function init() {
 			if ( defined( 'WPTELEGRAM_FORMAT_TEXT_LOADED' ) ) {
@@ -133,8 +135,10 @@ if ( ! class_exists( __NAMESPACE__ . '\WPLoader_1_0_0', false ) ) {
 		 *
 		 * @since  1.0.0
 		 * @param  string $class_name Name of the class being requested.
+		 *
+		 * @return void
 		 */
-		public static function autoload_classes( $class_name ) {
+		public static function autoload_classes( string $class_name ) {
 			$namespace = 'WPTelegram\FormatText';
 
 			if ( 0 !== strpos( $class_name, $namespace ) ) {

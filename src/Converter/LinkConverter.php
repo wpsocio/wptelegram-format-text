@@ -42,7 +42,7 @@ class LinkConverter extends BaseConverter {
 	/**
 	 * Get link info.
 	 *
-	 * @param ElementInterface $element - The element.
+	 * @param ElementInterface $element The element.
 	 *
 	 * @return array - The link info.
 	 */
@@ -56,11 +56,11 @@ class LinkConverter extends BaseConverter {
 	/**
 	 * Whether a link is relative. based on whether it starts with a valid protocol scheme.
 	 *
-	 * @param string $href - The link.
+	 * @param string $href The link.
 	 *
-	 * @return bool - Whether the link is relative.
+	 * @return boolean Whether the link is relative.
 	 */
-	protected function isRelativeLink( $href ) {
+	protected function isRelativeLink( string $href ) {
 		return ! preg_match( '#^[a-z][a-z0-9]*://#i', $href );
 	}
 
