@@ -61,9 +61,9 @@ class ListItemConverter extends BaseConverter {
 	/**
 	 * Get clean value.
 	 *
-	 * @param ElementInterface $element - The element.
+	 * @param ElementInterface $element The element.
 	 *
-	 * @return string - The clean value.
+	 * @return string The clean value.
 	 */
 	private function getCleanValue( ElementInterface $element ) {
 		// Remove leading and trailing spaces.

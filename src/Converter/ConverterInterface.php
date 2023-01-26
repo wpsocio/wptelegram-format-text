@@ -15,17 +15,19 @@ interface ConverterInterface {
 	/**
 	 * Set the configuration.
 	 *
-	 * @param Configuration $config - The configuration.
+	 * @param Configuration $config The configuration.
+	 *
+	 * @return void
 	 */
 	public function setConfig( Configuration $config );
 
 	/**
 	 * Convert the given element.
 	 *
-	 * @param ElementInterface $element - The element to convert.
+	 * @param ElementInterface $element The element to convert.
 	 * @return string - The converted string
 	 */
-	public function convert( ElementInterface $element);
+	public function convert( ElementInterface $element );
 
 	/**
 	 * Get an array of the tags that this converter supports

@@ -23,5 +23,5 @@ interface HtmlConverterInterface {
 	 *
 	 * @throws InvalidArgumentException If the html is invalid.
 	 */
-	public function convert( $html);
+	public function convert( string $html );
 }

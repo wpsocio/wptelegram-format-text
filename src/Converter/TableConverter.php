@@ -18,6 +18,8 @@ class TableConverter extends BaseConverter {
 	 * Prepare the element before converting.
 	 *
 	 * @param ElementInterface $element The element to convert.
+	 *
+	 * @return void
 	 */
 	public function preConvert( ElementInterface $element ) {
 		$tag = $element->getTagName();
@@ -35,9 +37,7 @@ class TableConverter extends BaseConverter {
 	}
 
 	/**
-	 * Convert the table elements
-	 *
-	 * @param ElementInterface $element The element to convert.
+	 * {@inheritdoc}
 	 */
 	public function convert( ElementInterface $element ) {
 		$tag = $element->getTagName();

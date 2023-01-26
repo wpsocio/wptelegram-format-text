@@ -99,7 +99,7 @@ class TextConverter extends BaseConverter {
 	/**
 	 * Get clean value.
 	 *
-	 * @param ElementInterface $element - The element.
+	 * @param ElementInterface $element The element.
 	 *
 	 * @return string - The clean value.
 	 */

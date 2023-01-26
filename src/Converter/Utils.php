@@ -20,12 +20,12 @@ class Utils {
 	/**
 	 * It processes the pre-defined placeholders in the given text.
 	 *
-	 * @param string $text The text to process.
-	 * @param string $action 'add' or 'replace'.
+	 * @param string $text   The text to process.
+	 * @param string $action The action to take - 'add' or 'replace'.
 	 *
 	 * @return string The processed text.
 	 */
-	public static function processPlaceholders( $text, $action = 'replace' ) {
+	public static function processPlaceholders( string $text, string $action = 'replace' ) {
 
 		$placeholders = array_keys( self::PLACEHOLDERS );
 		$values       = array_values( self::PLACEHOLDERS );
@@ -42,11 +42,11 @@ class Utils {
 	/**
 	 * Decode HTML entities.
 	 *
-	 * @param string $value - The value to decode.
+	 * @param string $value The value to decode.
 	 *
-	 * @return string - The decoded value.
+	 * @return string The decoded value.
 	 */
-	public static function decodeHtmlEntities( $value ) {
+	public static function decodeHtmlEntities( string $value ) {
 
 		return html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
 	}
@@ -58,7 +58,7 @@ class Utils {
 	 *
 	 * @return string The converted string.
 	 */
-	public static function htmlSpecialChars( $value ) {
+	public static function htmlSpecialChars( string $value ) {
 
 		return htmlspecialchars( $value, ENT_NOQUOTES, 'UTF-8' );
 	}
@@ -68,9 +68,9 @@ class Utils {
 	 *
 	 * @param  string $version PHP version string to compare.
 	 *
-	 * @return bool Result of comparison check.
+	 * @return boolean Result of comparison check.
 	 */
-	public static function phpAtLeast( $version ) {
+	public static function phpAtLeast( string $version ) {
 		return version_compare( PHP_VERSION, $version, '>=' );
 	}
 
@@ -81,7 +81,7 @@ class Utils {
 	 *
 	 * @return array The style attribute as an array.
 	 */
-	public static function parseStyle( $style ) {
+	public static function parseStyle( string $style ) {
 		$style_array = [];
 
 		$parts = explode( ';', $style );

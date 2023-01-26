@@ -24,7 +24,7 @@ class Configuration {
 	 *
 	 * @param array<string, mixed> $config Configuration.
 	 */
-	public function __construct( $config = [] ) {
+	public function __construct( array $config = [] ) {
 		$this->config = $config;
 	}
 
@@ -32,8 +32,10 @@ class Configuration {
 	 * Merge configuration.
 	 *
 	 * @param array<string, mixed> $config Configuration.
+	 *
+	 * @return void
 	 */
-	public function merge( $config = [] ) {
+	public function merge( array $config = [] ) {
 		$this->config = array_merge( $this->config, $config );
 	}
 
@@ -41,18 +43,22 @@ class Configuration {
 	 * Replace configuration.
 	 *
 	 * @param array<string, mixed> $config Configuration.
+	 *
+	 * @return void
 	 */
-	public function replace( $config = [] ) {
+	public function replace( array $config = [] ) {
 		$this->config = $config;
 	}
 
 	/**
 	 * Set option.
 	 *
-	 * @param string $key Key.
+	 * @param string $key   Key.
 	 * @param mixed  $value Value.
+	 *
+	 * @return void
 	 */
-	public function setOption( $key, $value ) {
+	public function setOption( string $key, $value ) {
 		$this->config[ $key ] = $value;
 	}
 
