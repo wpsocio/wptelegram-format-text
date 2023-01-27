@@ -47,6 +47,13 @@ class EmphasisConverter extends BaseConverter {
 			return $value;
 		}
 
+		// If this node is a descendant of the same tag, don't emit the tag.
+		// This prevents <b>foo <b>bar</b></b> from being converted to *foo *bar**
+		// which is incorrect. We want *foo bar* instead.
+		if ( $element->isDescendantOf( $tag ) ) {
+			return $value;
+		}
+
 		$isNestedTag  = $element->isDescendantOf( $this->getV1SupportedTags() );
 		$isMdV1Format = 'v1' === $this->formattingToMarkdown();
 
@@ -79,6 +86,13 @@ class EmphasisConverter extends BaseConverter {
 		$value = $element->getValue();
 
 		if ( ! trim( $value ) ) {
+			return $value;
+		}
+
+		// If this node is a descendant of the same tag, don't emit the tag.
+		// This prevents <em>foo <em>bar</em></em> from being converted to <em>foo <em>bar</em></em>
+		// which is incorrect/useless. We want <em>foo bar</em> instead.
+		if ( $element->isDescendantOf( $tag ) ) {
 			return $value;
 		}
 
