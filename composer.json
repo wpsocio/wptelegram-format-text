@@ -1,7 +1,7 @@
 {
 	"name": "wptelegram/format-text",
-	"version": "1.0.0",
 	"description": "HTML to Text converter/formatter for Telegram Bot API",
+	"license": "MIT",
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^2.3",
 		"phpunit/phpunit": "9",
