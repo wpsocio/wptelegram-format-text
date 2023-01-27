@@ -17,10 +17,5 @@
 		"lint:fix": "\"vendor/bin/phpcbf\" --standard=phpcs.xml .",
 		"lint:skip-warnings": "\"vendor/bin/phpcs\" --standard=phpcs.xml -n .",
 		"test": "\"vendor/bin/phpunit\" tests/"
-	},
-	"config": {
-		"platform": {
-			"php": "7.4"
-		}
 	}
 }
