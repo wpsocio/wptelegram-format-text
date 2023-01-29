@@ -61,6 +61,7 @@ class LinkConverter extends BaseConverter {
 	 * @return boolean Whether the link is relative.
 	 */
 	protected function isRelativeLink( string $href ) {
+		// If the link starts with a valid protocol scheme e.g. "http://", it's not relative.
 		return ! preg_match( '#^[a-z][a-z0-9]*://#i', $href );
 	}
 
