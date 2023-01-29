@@ -16,6 +16,16 @@ use WPTelegram\FormatText\Converter\Utils;
 class HtmlConverter implements HtmlConverterInterface {
 
 	/**
+	 * The maximum length of the text of a Telegram message.
+	 */
+	const TG_TEXT_MAX_LENGTH = 4096;
+
+	/**
+	 * The maximum length of the caption of a Telegram message/media.
+	 */
+	const TG_CAPTION_MAX_LENGTH = 1024;
+
+	/**
 	 * The environment
 	 *
 	 * @var Environment
@@ -111,6 +121,43 @@ class HtmlConverter implements HtmlConverterInterface {
 		$result = $this->convertChildren( $rootElement );
 
 		return $this->cleanUp( $result );
+	}
+
+	/**
+	 * Safely trim the given html to the given number of words.
+	 *
+	 * @param string  $html    The html to trim.
+	 * @param string  $limitBy The type of limit to apply. Can be 'words' or 'chars'.
+	 * @param integer $limit   The number of words or chars to limit to.
+	 *
+	 * @return string The trimmed html.
+	 */
+	public function safeTrim( string $html, string $limitBy = 'chars', int $limit = self::TG_TEXT_MAX_LENGTH ) {
+		// DOMDocument doesn't support empty value and throws an error.
+		if ( trim( $html ) === '' ) {
+			return '';
+		}
+
+		$document = $this->createDOMDocument( $this->prepareHtml( $html ) );
+
+		$root = $document->documentElement;
+
+		$rootElement = new Element( $root );
+
+		$content = $rootElement->getNode()->textContent;
+
+		$count = 'words' === $limitBy ? str_word_count( $content ) : mb_strlen( $content );
+
+		if ( $count <= $limit ) {
+			return $html;
+		}
+
+		Utils::limitContentBy( $document, $limitBy, $limit );
+
+		$result = trim( $this->convertChildren( $rootElement ) ) . '…';
+
+		return $result;
+
 	}
 
 	/**
@@ -236,23 +283,20 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @return boolean Whether the element should be converted.
 	 */
 	public function shouldConvert( ElementInterface $element ) {
-		$shouldConvert = true;
+		$shouldConvert = (bool) $element->getValue();
 
 		$elementsToRemove = $this->getConfig()->getOption( 'elements_to_remove', [] );
 
 		// If the element is in the list of elements to remove, don't convert it.
-		if ( in_array( $element->getTagName(), $elementsToRemove, true ) ) {
+		if ( $shouldConvert && in_array( $element->getTagName(), $elementsToRemove, true ) ) {
 			$shouldConvert = false;
 		}
 
 		if ( $shouldConvert && $this->getConfig()->getOption( 'remove_display_none', true ) ) {
-			$style = $element->getAttribute( 'style' );
+			$style = Utils::parseStyle( $element->getAttribute( 'style' ) );
 
-			if ( ! empty( $style ) ) {
-				$style = Utils::parseStyle( $style );
-				if ( isset( $style['display'] ) && 'none' === $style['display'] ) {
-					$shouldConvert = false;
-				}
+			if ( isset( $style['display'] ) && 'none' === $style['display'] ) {
+				$shouldConvert = false;
 			}
 		}
 
