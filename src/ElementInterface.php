@@ -7,6 +7,8 @@
 
 namespace WPTelegram\FormatText;
 
+use DOMNode;
+
 interface ElementInterface {
 
 	/**
