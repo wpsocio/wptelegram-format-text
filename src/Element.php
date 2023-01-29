@@ -160,14 +160,14 @@ class Element implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public function getChildren() {
-		$ret = [];
+		$children = [];
 		foreach ( $this->node->childNodes as $node ) {
 			if ( $node instanceof DOMNode ) {
-				$ret[] = new self( $node );
+				$children[] = new self( $node );
 			}
 		}
 
-		return $ret;
+		return $children;
 	}
 
 	/**
