@@ -7,6 +7,9 @@
 
 namespace WPTelegram\FormatText\Converter;
 
+use DOMDocument;
+use DOMXPath;
+
 /**
  * Class Utils
  */
@@ -84,6 +87,10 @@ class Utils {
 	public static function parseStyle( string $style ) {
 		$style_array = [];
 
+		if ( empty( $style ) ) {
+			return $style_array;
+		}
+
 		$parts = explode( ';', $style );
 
 		foreach ( $parts as $part ) {
@@ -101,5 +108,85 @@ class Utils {
 		}
 
 		return $style_array;
+	}
+
+	/**
+	 * Limit the text content of the given DOMDocument to the given number of words or characters.
+	 *
+	 * @param DOMDocument $document The DOMDocument to limit. It is modifed in place.
+	 * @param string      $limitBy  The type of limit to apply. Can be 'words' or 'chars'.
+	 * @param integer     $limit    The number of words or chars to limit to.
+	 *
+	 * @return void
+	 */
+	public static function limitContentBy( DOMDocument $document, string $limitBy, int $limit ) {
+		// Create a new DOMXPath object from the DOMDocument.
+		$xpath = new DOMXPath( $document );
+		// Get all text nodes in the DOMDocument
+		$textNodes = $xpath->query( '//text()' );
+		// Initialize the count
+		$count = 0;
+
+		$limitReached = false;
+
+		// Iterate over each text node
+		for ( $i = 0; $i < $textNodes->length; $i++ ) {
+			$textNode = $textNodes->item( $i );
+			if ( $limitReached ) {
+				$textNode->parentNode->removeChild( $textNode );
+				continue;
+			}
+			// Get the length of the text node's value
+			$nodeLength = 'words' === $limitBy ? str_word_count( $textNode->nodeValue ) : mb_strlen( $textNode->nodeValue );
+
+			// If the new count becomes greater than the limit
+			if ( ( $count + $nodeLength ) >= $limit ) {
+				// Calculate the number of items to retain
+				$numberToRetain = $limit - $count - 1; // -1 for the ellipsis
+
+				if ( $numberToRetain > 0 ) {
+					// Truncate the text after the last space before the limit
+					$pattern = 'words' === $limitBy ? '/((?:[\n\r\t\s]*[^\n\r\t\s]+){1,' . $numberToRetain . '}).*/su' : '/(.{1,' . $numberToRetain . '}(?:\s|$)).*/su';
+
+					// Set the value of the text node to the truncated text
+					$textNode->nodeValue = preg_replace( $pattern, '${1}', $textNode->nodeValue );
+				} else {
+					$textNode->parentNode->removeChild( $textNode );
+				}
+
+				// Set the limit reached flag to true
+				$limitReached = true;
+			}
+
+			// Add the length of the text node's value to the count
+			$count += $nodeLength;
+		}
+
+		self::removeEmptyNodes( $document );
+	}
+
+	/**
+	 * Remove empty nodes from the given DOMDocument.
+	 *
+	 * @param DOMDocument $document The DOMDocument to remove empty nodes from.
+	 *
+	 * @return void
+	 */
+	public static function removeEmptyNodes( DOMDocument $document ) {
+
+		// Create a new DOMXPath object from the DOMDocument
+		$xpath = new DOMXPath( $document );
+		// XPath expression to select nodes with empty text content
+		$expression = '/child::*//*[not(*) and not(text()[normalize-space()])]';
+		// Get a list of nodes that match the XPath expression
+		$nodeList = $xpath->query( $expression );
+
+		// Iterate over the list of nodes and remove them from the DOM
+		while ( $nodeList && $nodeList->length ) {
+			foreach ( $nodeList as $node ) {
+				$node->parentNode->removeChild( $node );
+			}
+			$nodeList = $xpath->query( $expression );
+		}
 	}
 }
