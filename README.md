@@ -6,6 +6,10 @@ Inspired by [thephpleague/html-to-markdown](https://github.com/thephpleague/html
 
 ## Usage
 
+```bash
+composer require wptelegram/format-text
+```
+
 ```php
 require_once __DIR__ . '/autoload-static.php';
 
