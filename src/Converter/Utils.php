@@ -145,11 +145,9 @@ class Utils {
 				$numberToRetain = $limit - $count - 1; // -1 for the ellipsis
 
 				if ( $numberToRetain > 0 ) {
-					// Truncate the text after the last space before the limit
-					$pattern = 'words' === $limitBy ? '/((?:[\n\r\t\s]*[^\n\r\t\s]+){1,' . $numberToRetain . '}).*/su' : '/(.{1,' . $numberToRetain . '}(?:\s|$)).*/su';
 
 					// Set the value of the text node to the truncated text
-					$textNode->nodeValue = preg_replace( $pattern, '${1}', $textNode->nodeValue );
+					$textNode->nodeValue = self::limitTextBy( $textNode->nodeValue, $limitBy, $numberToRetain );
 				} else {
 					$textNode->parentNode->removeChild( $textNode );
 				}
@@ -163,6 +161,32 @@ class Utils {
 		}
 
 		self::removeEmptyNodes( $document );
+	}
+
+	/**
+	 * Limit the text string to the given number of words or characters.
+	 * It preserves the words and doesn't cut them off.
+	 *
+	 * @param string  $text    The text to limit.
+	 * @param string  $limitBy The type of limit to apply. Can be 'words' or 'chars'.
+	 * @param integer $limit   The number of words or chars to limit to.
+	 *
+	 * @return string The limited text.
+	 */
+	public static function limitTextBy( string $text, string $limitBy, int $limit ) {
+
+		// Get the length of the text.
+		$textLength = 'words' === $limitBy ? str_word_count( $text ) : mb_strlen( $text );
+
+		// If the text is shorter than the limit, return the text.
+		if ( $textLength <= $limit || $limit < 1 ) {
+			return $text;
+		}
+
+		// Truncate the text after the last space before the limit
+		$pattern = 'words' === $limitBy ? '/((?:[\n\r\t\s]*[^\n\r\t\s]+){1,' . $limit . '}).*/su' : '/(.{1,' . $limit . '}(?:\s|$)).*/su';
+
+		return preg_replace( $pattern, '${1}', $text );
 	}
 
 	/**
