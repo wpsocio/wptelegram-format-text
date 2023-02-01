@@ -46,6 +46,8 @@ class HtmlConverter implements HtmlConverterInterface {
 				'char_set'            => 'auto',
 				// An array of elements to remove.
 				'elements_to_remove'  => [ 'form' ],
+				// Ellipsis character for truncated text.
+				'elipsis'             => '…',
 				// Set to 'HTML', 'Markdown' or 'MarkdownV2'.
 				'format_to'           => 'text',
 				// Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
@@ -154,7 +156,9 @@ class HtmlConverter implements HtmlConverterInterface {
 
 		Utils::limitContentBy( $document, $limitBy, $limit );
 
-		$result = trim( $this->convertChildren( $rootElement ) ) . '…';
+		$elipsis = $this->getConfig()->getOption( 'elipsis', '…' );
+
+		$result = trim( $this->convertChildren( $rootElement ) ) . $elipsis;
 
 		return $result;
 
