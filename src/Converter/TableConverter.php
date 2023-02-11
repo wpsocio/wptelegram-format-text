@@ -58,18 +58,22 @@ class TableConverter extends BaseConverter {
 
 			case 'tr':
 				$nextElement = $element->getNextElement();
-				// If the next element is a tr.
+
 				if ( ! trim( $value ) ) {
 					$value = '';
-				} elseif ( $nextElement && $nextElement->getTagName() === 'tr' ) {
+					break;
+				}
+
+				$value = "\n" . ltrim( $value );
+
+				// If the next element is a tr.
+				if ( $nextElement && $nextElement->getTagName() === 'tr' ) {
 					$value = $value . $this->escapeMarkdownChars( $this->config->getOption( 'table_row_sep', "\n" ) );
 				}
 				break;
 
 			case 'thead':
 			case 'tfoot':
-				$nextElement = $element->getNextElement();
-				// If the next element is a tr.
 				if ( ! trim( $value ) ) {
 					$value = '';
 				} else {

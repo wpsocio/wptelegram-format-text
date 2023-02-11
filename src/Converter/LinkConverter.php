@@ -36,7 +36,11 @@ class LinkConverter extends BaseConverter {
 			return sprintf( '<a href="%1$s">%2$s</a>', $href, $text );
 		}
 
-		return sprintf( '%1$s (%2$s)', $text, $href );
+		$retainHyperlinks = $this->config->getOption( 'retain_hyperlinks', true );
+
+		$format = $retainHyperlinks ? '%1$s (%2$s)' : '%1$s';
+
+		return sprintf( $format, $text, $href );
 	}
 
 	/**

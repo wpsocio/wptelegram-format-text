@@ -7,8 +7,12 @@
  * @phpcs:disable Squiz.Commenting.ClassComment,Squiz.Commenting.FunctionComment
  */
 
+namespace WPTelegram\FormatText\Tests;
+
 use PHPUnit\Framework\TestCase;
 use WPTelegram\FormatText\HtmlConverter;
+
+require_once __DIR__ . '/Utils.php';
 
 final class HtmlConverterTest extends TestCase {
 
@@ -33,5 +37,25 @@ final class HtmlConverterTest extends TestCase {
 			$text,
 			( new HtmlConverter() )->convert( $text )
 		);
+	}
+
+	public function testWithInputFiles() {
+		$files = glob( __DIR__ . '/data/input/*.html' );
+
+		foreach ( $files as $file ) {
+			$input = file_get_contents( $file );
+
+			foreach ( Utils::FORMATS as $format ) {
+
+				$output_path = Utils::getTestOutputPath( $file, $format );
+
+				$expected = file_get_contents( $output_path );
+
+				$this->assertEquals(
+					$expected,
+					( new HtmlConverter( [ 'format_to' => $format ] ) )->convert( $input )
+				);
+			}
+		}
 	}
 }

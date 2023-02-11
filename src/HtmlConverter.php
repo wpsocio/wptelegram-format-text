@@ -56,6 +56,8 @@ class HtmlConverter implements HtmlConverterInterface {
 				'relative_links'      => 'clean',
 				// Set to false to keep display:none elements.
 				'remove_display_none' => true,
+				// Set to false to remove hyperlinks being added in parentheses when formatting to 'text'.
+				'retain_hyperlinks'   => true,
 				// A callable to determine if a node should be converted.
 				'should_convert_cb'   => null,
 				// `list_item_style` for nested <ul> and <ol>.
@@ -65,7 +67,7 @@ class HtmlConverter implements HtmlConverterInterface {
 				// Set the default separator for each <td> and <th>.
 				'table_cell_sep'      => ' | ',
 				// Set the default separator for each <tr>.
-				'table_row_sep'       => "\n",
+				'table_row_sep'       => "\n" . str_repeat( '-', 20 ) . "\n",
 			];
 
 			$this->environment = Environment::createDefaultEnvironment( $defaults );
@@ -179,8 +181,8 @@ class HtmlConverter implements HtmlConverterInterface {
 		$html = str_replace( "\r\n", "\n", $html );
 		// remove \r.
 		$html = str_replace( "\r", "\n", $html );
-		// remove <script> and <style> tags.
-		$html = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $html );
+		// remove <head>, <script> and <style> tags.
+		$html = preg_replace( '@<(head|script|style)[^>]*?>.*?</\\1>@si', '', $html );
 		// Convert <br> to \n.
 		$html = preg_replace( '@<br[^>]*?/?>@si', "\n", $html );
 

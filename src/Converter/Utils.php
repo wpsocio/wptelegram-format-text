@@ -100,7 +100,7 @@ class Utils {
 				continue;
 			}
 
-			list( $key, $value ) = array_map( 'trim', explode( ':', $part, 2 ) );
+			list( $key, $value ) = array_map( 'trim', array_pad( explode( ':', $part, 2 ), 2, '' ) );
 
 			if ( ! empty( $key ) ) {
 				$style_array[ $key ] = $value;

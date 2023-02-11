@@ -21,6 +21,7 @@
 		"release:major": "composer run-script release -- --type=major",
 		"release:minor": "composer run-script release -- --type=minor",
 		"release:patch": "composer run-script release -- --type=patch",
-		"release": "@php bin/release.php"
+		"release": "@php bin/release.php",
+		"snapshots": "@php bin/snapshots.php"
 	}
 }
