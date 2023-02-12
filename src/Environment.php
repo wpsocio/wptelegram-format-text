@@ -17,6 +17,7 @@ use WPTelegram\FormatText\Converter\LinkConverter;
 use WPTelegram\FormatText\Converter\ListBlockConverter;
 use WPTelegram\FormatText\Converter\ListItemConverter;
 use WPTelegram\FormatText\Converter\PreformattedConverter;
+use WPTelegram\FormatText\Converter\SpoilerConverter;
 use WPTelegram\FormatText\Converter\TableConverter;
 use WPTelegram\FormatText\Converter\TextConverter;
 
@@ -101,12 +102,13 @@ final class Environment {
 		$environment->addConverter( new CodeConverter() );
 		$environment->addConverter( new CommentConverter() );
 		$environment->addConverter( new EmphasisConverter() );
-		$environment->addConverter( new TableConverter() );
 		$environment->addConverter( new HorizontalRuleConverter() );
 		$environment->addConverter( new LinkConverter() );
 		$environment->addConverter( new ListBlockConverter() );
 		$environment->addConverter( new ListItemConverter() );
 		$environment->addConverter( new PreformattedConverter() );
+		$environment->addConverter( new SpoilerConverter() );
+		$environment->addConverter( new TableConverter() );
 		$environment->addConverter( new TextConverter() );
 
 		return $environment;
