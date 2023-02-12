@@ -18,8 +18,6 @@ foreach ( $files as $file ) {
 
 		$output_path = Utils::getTestOutputPath( $file, $format );
 
-		$expected = file_get_contents( $output_path );
-
 		$converter = new HtmlConverter( [ 'format_to' => $format ] );
 
 		$output = $converter->convert( $input );
