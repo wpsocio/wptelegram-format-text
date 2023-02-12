@@ -29,10 +29,12 @@ class LinkConverter extends BaseConverter {
 		}
 
 		if ( $this->formattingToMarkdown() ) {
+			$href = $this->escapeMarkdownChars( $href, '', [ ')', '\\' ] );
 			return sprintf( '[%1$s](%2$s)', $text, $href );
 		}
 
 		if ( $this->formattingToHtml() ) {
+			$href = str_replace( '"', rawurlencode( '"' ), $href );
 			return sprintf( '<a href="%1$s">%2$s</a>', $href, $text );
 		}
 
