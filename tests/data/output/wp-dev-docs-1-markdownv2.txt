@@ -87,14 +87,11 @@ Top ↑
 Uses
 
 Uses
-
 Uses \| Description
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [post\_password\_required\(\)](https://developer.wordpress.org/reference/functions/post_password_required/)
 wp\-includes/post\-template\.php \| Determines whether the post requires password and whether a correct password has been provided\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [\_\_\(\)](https://developer.wordpress.org/reference/functions/__/)
 wp\-includes/l10n\.php \| Retrieves the translation of $text\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
@@ -107,22 +104,17 @@ Top ↑
 Used By
 
 Used By
-
 Used By \| Description
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [the\_excerpt\_embed\(\)](https://developer.wordpress.org/reference/functions/the_excerpt_embed/)
 wp\-includes/embed\.php \| Displays the post excerpt for the embed template\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [WP\_Posts\_List\_Table::column\_title\(\)](https://developer.wordpress.org/reference/classes/wp_posts_list_table/column_title/)
 wp\-admin/includes/class\-wp\-posts\-list\-table\.php \| Handles the title column output\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [the\_excerpt\_rss\(\)](https://developer.wordpress.org/reference/functions/the_excerpt_rss/)
 wp\-includes/feed\.php \| Displays the post excerpt for the feed\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [the\_excerpt\(\)](https://developer.wordpress.org/reference/functions/the_excerpt/)
 wp\-includes/post\-template\.php \| Displays the post excerpt\.
 
@@ -131,11 +123,8 @@ Top ↑
 Changelog
 
 Changelog
-
 Version \| Description
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [4\.5\.0](https://developer.wordpress.org/reference/since/4.5.0/) \| Introduced the `$post` parameter\.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
 [0\.71](https://developer.wordpress.org/reference/since/0.71/) \| Introduced\.
