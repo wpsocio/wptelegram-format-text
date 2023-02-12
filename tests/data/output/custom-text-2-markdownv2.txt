@@ -2,11 +2,11 @@
 
 ```php
 /\* WP Telegram \- use custom image from \`'thumb\_bg'\` meta \*/
-add\_filter\( 'wptelegram\_p2tg\_post\_data\_featured\_image\_path\_value', function \( $url, $post \) \{
+add\_filter\( 'wptelegram\_p2tg\_post\_data\_featured\_image\_path\_value', function \( $path, $post \) \{
 
-    $new\_url \= get\_attached\_file\( get\_post\_meta\( $post\-\>ID, 'thumb\_bg', true \) \);
+    $new\_path \= get\_attached\_file\( get\_post\_meta\( $post\-\>ID, 'thumb\_bg', true \) \);
 
-    return $new\_url ?: $url;
+    return $new\_path ?: $path;
 \}, 10, 2 \);
 /\* WP Telegram \- use custom image \*/
 ```

@@ -1,11 +1,11 @@
 📌Code title here
 
 /* WP Telegram - use custom image from `'thumb_bg'` meta */
-add_filter( 'wptelegram_p2tg_post_data_featured_image_path_value', function ( $url, $post ) {
+add_filter( 'wptelegram_p2tg_post_data_featured_image_path_value', function ( $path, $post ) {
 
-    $new_url = get_attached_file( get_post_meta( $post->ID, 'thumb_bg', true ) );
+    $new_path = get_attached_file( get_post_meta( $post->ID, 'thumb_bg', true ) );
 
-    return $new_url ?: $url;
+    return $new_path ?: $path;
 }, 10, 2 );
 /* WP Telegram - use custom image */
 
