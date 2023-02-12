@@ -44,7 +44,7 @@ class EmphasisConverter extends BaseConverter {
 		$value = $element->getValue();
 
 		if ( ! trim( $value ) ) {
-			return $value;
+			return '';
 		}
 
 		// If this node is a descendant of the same tag, don't emit the tag.
