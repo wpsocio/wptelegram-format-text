@@ -49,7 +49,7 @@ abstract class BaseConverter implements ConverterInterface {
 	 *
 	 * @var string[] Markdown special characters.
 	 */
-	const MARKDOWN_V2_SPECIAL_CHARS = [ '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' ];
+	const MARKDOWN_V2_SPECIAL_CHARS = [ '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '\\' ];
 
 	/**
 	 * The configuration.
