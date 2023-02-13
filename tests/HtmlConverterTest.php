@@ -47,7 +47,7 @@ final class HtmlConverterTest extends TestCase {
 
 			foreach ( Utils::FORMATS as $format ) {
 
-				$output_path = realpath( Utils::getTestOutputPath( $file, $format ) );
+				$output_path = Utils::getTestOutputPath( $file, $format );
 
 				$expected = file_get_contents( $output_path );
 
