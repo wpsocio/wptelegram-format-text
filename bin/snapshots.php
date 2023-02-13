@@ -9,7 +9,7 @@ require_once __DIR__ . '/../tests/Utils.php';
 use WPTelegram\FormatText\Tests\Utils;
 use WPTelegram\FormatText\HtmlConverter;
 
-$files = glob( dirname( __DIR__ ) . '/tests/data/input/*.html' );
+$files = Utils::getInputFiles();
 
 foreach ( $files as $file ) {
 	$input = file_get_contents( $file );
