@@ -61,13 +61,6 @@ class TextConverter extends BaseConverter {
 			$markdown = $this->escapeMarkdownChars( $markdown, $escapeEntity );
 		}
 
-		if ( ' ' === $markdown ) {
-			$next = $element->getNext();
-			if ( ! $next || $next->isBlock() ) {
-				$markdown = '';
-			}
-		}
-
 		return Utils::decodeHtmlEntities( $markdown );
 	}
 

@@ -351,10 +351,10 @@ class HtmlConverter implements HtmlConverterInterface {
 		$output = preg_replace( "/[ \t]*\n[ \t]*/im", "\n", $output );
 		$output = preg_replace( "/ *\t */im", "\t", $output );
 
-		$output = Utils::processPlaceholders( $output, 'replace' );
-
 		// unarmor pre blocks.
 		$output = str_replace( "\r", "\n", $output );
+
+		$output = Utils::processPlaceholders( $output, 'replace' );
 
 		// remove unnecessary empty lines.
 		$output = preg_replace( "/\n\n\n*/im", "\n\n", $output );

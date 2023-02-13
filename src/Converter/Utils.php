@@ -18,6 +18,7 @@ class Utils {
 	const PLACEHOLDERS = [
 		'{:space:}' => ' ',
 		'{:tab:}'   => "\t",
+		'{:cr:}'    => "\r",
 	];
 
 	/**
