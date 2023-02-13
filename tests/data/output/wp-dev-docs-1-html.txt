@@ -85,14 +85,11 @@ Top ↑
 Uses
 
 Uses
-
 Uses | Description
 --------------------
-
 <a href="https://developer.wordpress.org/reference/functions/post_password_required/">post_password_required()</a>
 wp-includes/post-template.php | Determines whether the post requires password and whether a correct password has been provided.
 --------------------
-
 <a href="https://developer.wordpress.org/reference/functions/__/">__()</a>
 wp-includes/l10n.php | Retrieves the translation of $text.
 --------------------
@@ -105,22 +102,17 @@ Top ↑
 Used By
 
 Used By
-
 Used By | Description
 --------------------
-
 <a href="https://developer.wordpress.org/reference/functions/the_excerpt_embed/">the_excerpt_embed()</a>
 wp-includes/embed.php | Displays the post excerpt for the embed template.
 --------------------
-
 <a href="https://developer.wordpress.org/reference/classes/wp_posts_list_table/column_title/">WP_Posts_List_Table::column_title()</a>
 wp-admin/includes/class-wp-posts-list-table.php | Handles the title column output.
 --------------------
-
 <a href="https://developer.wordpress.org/reference/functions/the_excerpt_rss/">the_excerpt_rss()</a>
 wp-includes/feed.php | Displays the post excerpt for the feed.
 --------------------
-
 <a href="https://developer.wordpress.org/reference/functions/the_excerpt/">the_excerpt()</a>
 wp-includes/post-template.php | Displays the post excerpt.
 
@@ -129,11 +121,8 @@ Top ↑
 Changelog
 
 Changelog
-
 Version | Description
 --------------------
-
 <a href="https://developer.wordpress.org/reference/since/4.5.0/">4.5.0</a> | Introduced the <code>$post</code> parameter.
 --------------------
-
 <a href="https://developer.wordpress.org/reference/since/0.71/">0.71</a> | Introduced.

@@ -26,6 +26,15 @@ class Utils {
 
 		$output_path = preg_replace( '/\.html$/iu', '-' . strtolower( $format ) . '.txt', $output_path );
 
-		return realpath( $output_path );
+		return $output_path;
+	}
+
+	/**
+	 * Get the test input files.
+	 *
+	 * @return array The test input files.
+	 */
+	public static function getInputFiles(): array {
+		return glob( __DIR__ . '/data/input/*.html' );
 	}
 }

@@ -44,7 +44,7 @@ class EmphasisConverter extends BaseConverter {
 		$value = $element->getValue();
 
 		if ( ! trim( $value ) ) {
-			return $value;
+			return '';
 		}
 
 		// If this node is a descendant of the same tag, don't emit the tag.
@@ -74,6 +74,10 @@ class EmphasisConverter extends BaseConverter {
 		 */
 		$preStyle  = $this->getNormTag( $element->getPreviousSibling() ) === $tag ? '' : $style;
 		$postStyle = $this->getNormTag( $element->getNextSibling() ) === $tag ? '' : $style;
+
+		if ( '_' === $postStyle && in_array( $element->getParent()->getTagName(), [ 'u', 'ins' ], true ) ) {
+			$postStyle .= preg_match( '/' . preg_quote( $value, '/' ) . '$/', $element->getParent()->getValue() ) ? '{:cr:}' : '';
+		}
 
 		return $prefix . $preStyle . trim( $value ) . $postStyle . $suffix;
 	}

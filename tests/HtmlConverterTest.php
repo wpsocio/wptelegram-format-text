@@ -40,7 +40,7 @@ final class HtmlConverterTest extends TestCase {
 	}
 
 	public function testWithInputFiles() {
-		$files = glob( __DIR__ . '/data/input/*.html' );
+		$files = Utils::getInputFiles();
 
 		foreach ( $files as $file ) {
 			$input = file_get_contents( $file );

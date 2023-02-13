@@ -49,7 +49,7 @@ abstract class BaseConverter implements ConverterInterface {
 	 *
 	 * @var string[] Markdown special characters.
 	 */
-	const MARKDOWN_V2_SPECIAL_CHARS = [ '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' ];
+	const MARKDOWN_V2_SPECIAL_CHARS = [ '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '\\' ];
 
 	/**
 	 * The configuration.
@@ -205,10 +205,11 @@ abstract class BaseConverter implements ConverterInterface {
 	 *
 	 * @param string $text         The text to escape.
 	 * @param string $parentEntity The parent entity (Markdown v1 character) for which we are escaping.
+	 * @param array  $characters   The characters to escape.
 	 *
 	 * @return string The escaped text.
 	 */
-	protected function escapeMarkdownChars( string $text, string $parentEntity = '' ) {
+	protected function escapeMarkdownChars( string $text, string $parentEntity = '', array $characters = [] ) {
 
 		$formattingToMarkdown = $this->formattingToMarkdown();
 
@@ -222,7 +223,11 @@ abstract class BaseConverter implements ConverterInterface {
 			return str_replace( $parentEntity, $parentEntity . '\\' . $parentEntity . $parentEntity, $text );
 		}
 
-		$special_chars = 'v1' === $formattingToMarkdown ? self::MARKDOWN_V1_SPECIAL_CHARS : self::MARKDOWN_V2_SPECIAL_CHARS;
+		$special_chars = $characters;
+
+		if ( count( $special_chars ) === 0 ) {
+			$special_chars = 'v1' === $formattingToMarkdown ? self::MARKDOWN_V1_SPECIAL_CHARS : self::MARKDOWN_V2_SPECIAL_CHARS;
+		}
 
 		// Escape the special characters in Telegram Markdown.
 		$markdown_search = array_map(
