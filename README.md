@@ -1,6 +1,6 @@
 # WPTelegram\FormatText
 
-HTML to Text converter/formatter for Telegram Bot API
+HTML to Text converter/formatter for [Telegram Bot API](https://core.telegram.org/bots/api#formatting-options)
 
 Inspired by [thephpleague/html-to-markdown](https://github.com/thephpleague/html-to-markdown).
 
