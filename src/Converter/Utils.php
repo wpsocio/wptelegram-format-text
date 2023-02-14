@@ -138,7 +138,7 @@ class Utils {
 				continue;
 			}
 			// Get the length of the text node's value
-			$nodeLength = 'words' === $limitBy ? str_word_count( $textNode->nodeValue ) : mb_strlen( $textNode->nodeValue );
+			$nodeLength = 'words' === $limitBy ? self::strWordCount( $textNode->nodeValue ) : mb_strlen( $textNode->nodeValue );
 
 			// If the new count becomes greater than the limit
 			if ( ( $count + $nodeLength ) >= $limit ) {
@@ -165,6 +165,19 @@ class Utils {
 	}
 
 	/**
+	 * Count the number of words in the given string.
+	 *
+	 * Works with any locale unlike str_word_count().
+	 *
+	 * @param string $str The string to count the words in.
+	 *
+	 * @return integer The number of words in the string.
+	 */
+	public static function strWordCount( string $str ) {
+		return count( preg_split( '/\s+/u', $str ) );
+	}
+
+	/**
 	 * Limit the text string to the given number of words or characters.
 	 * It preserves the words and doesn't cut them off.
 	 *
@@ -177,7 +190,7 @@ class Utils {
 	public static function limitTextBy( string $text, string $limitBy, int $limit ) {
 
 		// Get the length of the text.
-		$textLength = 'words' === $limitBy ? str_word_count( $text ) : mb_strlen( $text );
+		$textLength = 'words' === $limitBy ? self::strWordCount( $text ) : mb_strlen( $text );
 
 		// If the text is shorter than the limit, return the text.
 		if ( $textLength <= $limit || $limit < 1 ) {

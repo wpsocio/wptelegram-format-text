@@ -150,7 +150,7 @@ class HtmlConverter implements HtmlConverterInterface {
 
 		$content = $rootElement->getNode()->textContent;
 
-		$count = 'words' === $limitBy ? str_word_count( $content ) : mb_strlen( $content );
+		$count = 'words' === $limitBy ? Utils::strWordCount( $content ) : mb_strlen( $content );
 
 		if ( $count <= $limit ) {
 			return $html;
