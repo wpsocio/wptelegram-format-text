@@ -174,7 +174,7 @@ class Utils {
 	 * @return integer The number of words in the string.
 	 */
 	public static function strWordCount( string $str ) {
-		return count( preg_split( '/\s+/u', $str ) );
+		return count( preg_split( '/[\s\n\r]+/u', $str ) );
 	}
 
 	/**
