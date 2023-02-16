@@ -9,6 +9,7 @@ namespace WPTelegram\FormatText;
 
 use DOMDocument;
 use WPTelegram\FormatText\Converter\Utils;
+use WPTelegram\FormatText\Exceptions\ConverterException;
 
 /**
  * A helper class to convert HTML
@@ -68,6 +69,8 @@ class HtmlConverter implements HtmlConverterInterface {
 				'table_cell_sep'      => ' | ',
 				// Set the default separator for each <tr>.
 				'table_row_sep'       => "\n" . str_repeat( '-', 20 ) . "\n",
+				// Whether to throw an exception when document parsing fails.
+				'throw_on_doc_error'  => false,
 			];
 
 			$this->environment = Environment::createDefaultEnvironment( $defaults );
@@ -116,7 +119,7 @@ class HtmlConverter implements HtmlConverterInterface {
 			return '';
 		}
 
-		$document = $this->createDOMDocument( $this->prepareHtml( $html ) );
+		$document = $this->createDOMDocument( self::prepareHtml( $html ) );
 
 		$root = $document->documentElement;
 
@@ -124,7 +127,7 @@ class HtmlConverter implements HtmlConverterInterface {
 
 		$result = $this->convertChildren( $rootElement );
 
-		return $this->cleanUp( $result );
+		return self::cleanUp( $result );
 	}
 
 	/**
@@ -142,7 +145,7 @@ class HtmlConverter implements HtmlConverterInterface {
 			return '';
 		}
 
-		$document = $this->createDOMDocument( $this->prepareHtml( $html ) );
+		$document = $this->createDOMDocument( self::prepareHtml( $html ) );
 
 		$root = $document->documentElement;
 
@@ -172,7 +175,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @param string $html The html to prepare.
 	 * @return string The prepared html.
 	 */
-	protected function prepareHtml( string $html ) {
+	public static function prepareHtml( string $html ) {
 
 		// replace &nbsp; with spaces.
 		$html = str_replace( '&nbsp;', ' ', $html );
@@ -195,6 +198,8 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @param string $html The html to convert.
 	 *
 	 * @return DOMDocument The DOMDocument version of the html
+	 *
+	 * @throws ConverterException If unable to load the html.
 	 */
 	private function createDOMDocument( string $html ) {
 		$document = new DOMDocument();
@@ -237,10 +242,20 @@ class HtmlConverter implements HtmlConverterInterface {
 			libxml_use_internal_errors( true );
 		}
 
-		$document->loadHTML( $header . $html );
+		$result = $document->loadHTML( $header . $html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_NONET | LIBXML_PARSEHUGE );
 
 		if ( $suppress_errors ) {
 			libxml_clear_errors();
+		}
+
+		$throwOnDocError = $this->getConfig()->getOption( 'throw_on_doc_error' );
+
+		if ( ! $result && $throwOnDocError ) {
+			throw new ConverterException( 'Unable to load HTML.', 'load_html_failed', $html );
+		}
+
+		if ( ! isset( $document->documentElement ) && $throwOnDocError ) {
+			throw new ConverterException( 'Unable to find document root element.', 'document_element_error', $html );
 		}
 
 		return $document;
@@ -344,7 +359,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 *
 	 * @return string The clean text.
 	 */
-	protected function cleanUp( string $input ) {
+	public static function cleanUp( string $input ) {
 		$output = $input;
 
 		// remove leading and trailing spaces on each line.
