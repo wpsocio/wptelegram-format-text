@@ -69,6 +69,8 @@ class HtmlConverter implements HtmlConverterInterface {
 				'table_cell_sep'      => ' | ',
 				// Set the default separator for each <tr>.
 				'table_row_sep'       => "\n" . str_repeat( '-', 20 ) . "\n",
+				// Whether to throw an exception when document parsing fails.
+				'throw_on_doc_error'  => false,
 			];
 
 			$this->environment = Environment::createDefaultEnvironment( $defaults );
@@ -246,11 +248,13 @@ class HtmlConverter implements HtmlConverterInterface {
 			libxml_clear_errors();
 		}
 
-		if ( ! $result ) {
+		$throwOnDocError = $this->getConfig()->getOption( 'throw_on_doc_error' );
+
+		if ( ! $result && $throwOnDocError ) {
 			throw new ConverterException( 'Unable to load HTML.', 'load_html_failed', $html );
 		}
 
-		if ( ! isset( $document->documentElement ) ) {
+		if ( ! isset( $document->documentElement ) && $throwOnDocError ) {
 			throw new ConverterException( 'Unable to find document root element.', 'document_element_error', $html );
 		}
 
