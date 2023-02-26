@@ -63,7 +63,8 @@ class CodeConverter extends BaseConverter {
 		$code = html_entity_decode( $element->getChildrenAsString() );
 
 		if ( $removeTag ) {
-			$code = preg_replace( '/<\/?code[^>]*?>/i', '', $code );
+			// Remove the code tags at the beginning and end of the code.
+			$code = preg_replace( '/(?:\A<code[^>]*?>|<\/code>\Z)/i', '', trim( $code ) );
 		}
 
 		$code = Utils::processPlaceholders( $code, 'add' );
@@ -93,9 +94,16 @@ class CodeConverter extends BaseConverter {
 	 * {@inheritdoc}
 	 */
 	public function convertToHtml( ElementInterface $element ) {
-		$code = $this->getCodeContent( $element, false );
+		$code = Utils::decodeHtmlEntities( $this->getCodeContent( $element, false ) );
 
-		return Utils::decodeHtmlEntities( $code );
+		$pattern = '/(?P<startTag><code[^>]*?>)(?P<content>.+)(?P<endTag><\/code>)/i';
+
+		if ( preg_match( $pattern, $code, $matches ) ) {
+			// The code is already wrapped in a code tag, so we need to encode the HTML entities.
+			return $matches['startTag'] . Utils::htmlSpecialChars( $matches['content'] ) . $matches['endTag'];
+		}
+
+		return $code;
 	}
 
 	/**
