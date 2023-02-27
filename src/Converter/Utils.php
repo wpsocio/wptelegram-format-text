@@ -114,7 +114,7 @@ class Utils {
 	/**
 	 * Limit the text content of the given DOMDocument to the given number of words or characters.
 	 *
-	 * @param DOMDocument $document The DOMDocument to limit. It is modifed in place.
+	 * @param DOMDocument $document The DOMDocument to limit. It is modified in place.
 	 * @param string      $limitBy  The type of limit to apply. Can be 'words' or 'chars'.
 	 * @param integer     $limit    The number of words or chars to limit to.
 	 *
