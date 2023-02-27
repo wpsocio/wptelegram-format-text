@@ -154,4 +154,13 @@ interface ElementInterface {
 	 * @return ElementInterface|null
 	 */
 	public function getNextElement();
+
+	/**
+	 * Whether the element is a void element, i.e. it cannot have children.
+	 *
+	 * @see https://developer.mozilla.org/en-US/docs/Glossary/Void_element
+	 *
+	 * @return boolean
+	 */
+	public function isVoid();
 }
