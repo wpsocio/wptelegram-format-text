@@ -13,6 +13,7 @@ use WPTelegram\FormatText\Converter\ConverterInterface;
 use WPTelegram\FormatText\Converter\DefaultConverter;
 use WPTelegram\FormatText\Converter\EmphasisConverter;
 use WPTelegram\FormatText\Converter\HorizontalRuleConverter;
+use WPTelegram\FormatText\Converter\ImageConverter;
 use WPTelegram\FormatText\Converter\LinkConverter;
 use WPTelegram\FormatText\Converter\ListBlockConverter;
 use WPTelegram\FormatText\Converter\ListItemConverter;
@@ -104,6 +105,7 @@ final class Environment {
 		$environment->addConverter( new EmphasisConverter() );
 		$environment->addConverter( new HorizontalRuleConverter() );
 		$environment->addConverter( new LinkConverter() );
+		$environment->addConverter( new ImageConverter() );
 		$environment->addConverter( new ListBlockConverter() );
 		$environment->addConverter( new ListItemConverter() );
 		$environment->addConverter( new PreformattedConverter() );
