@@ -43,6 +43,16 @@ class Element implements ElementInterface {
 	];
 
 	/**
+	 * The supported void elements.
+	 *
+	 * @var array
+	 */
+	const VOID_ELEMENTS = [
+		'hr',
+		'img',
+	];
+
+	/**
 	 * The node.
 	 *
 	 * @var DOMNode
@@ -344,5 +354,12 @@ class Element implements ElementInterface {
 		}
 
 		return $this->nextElementCached;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isVoid() {
+		return in_array( $this->getTagName(), self::VOID_ELEMENTS, true );
 	}
 }

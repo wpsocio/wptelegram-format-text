@@ -14,6 +14,8 @@ Contents
 - Changelog
 - User Contributed Notes
 
+-------------
+
 Parameters
 
 `$post`
@@ -24,11 +26,15 @@ Post ID or [WP_Post](https://developer.wordpress.org/reference/classes/wp_post/)
 
 Default: `null`
 
+-------------
+
 Top ↑
 
 Return
 
 string Post excerpt.
+
+-------------
 
 Top ↑
 
@@ -70,13 +76,17 @@ function get_the_excerpt( $post = null ) {
 [View on Trac](https://core.trac.wordpress.org/browser/tags/6.1/src/wp-includes/post-template.php#L408)
 [View on GitHub](https://github.com/WordPress/wordpress-develop/blob/6.1/src/wp-includes/post-template.php#L408-L432)
 
+-------------
+
 Top ↑
 
 Hooks
 
-[                            apply_filters( 'get_the_excerpt',  string $post_excerpt,  WP_Post $post )](https://developer.wordpress.org/reference/hooks/get_the_excerpt/)
+[apply_filters( 'get_the_excerpt',  string $post_excerpt,  WP_Post $post )](https://developer.wordpress.org/reference/hooks/get_the_excerpt/)
 
 Filters the retrieved post excerpt.
+
+-------------
 
 Top ↑
 
@@ -99,6 +109,8 @@ wp-includes/l10n.php | Retrieves the translation of $text.
 Show 3 more uses
 Hide more uses
 
+-------------
+
 Top ↑
 
 Used By
@@ -118,6 +130,8 @@ wp-includes/feed.php | Displays the post excerpt for the feed.
 [the_excerpt()](https://developer.wordpress.org/reference/functions/the_excerpt/)
 wp-includes/post-template.php | Displays the post excerpt.
 
+-------------
+
 Top ↑
 
 Changelog
@@ -128,3 +142,5 @@ Version | Description
 [4.5.0](https://developer.wordpress.org/reference/since/4.5.0/) | Introduced the `$post` parameter.
 --------------------
 [0.71](https://developer.wordpress.org/reference/since/0.71/) | Introduced.
+
+-------------

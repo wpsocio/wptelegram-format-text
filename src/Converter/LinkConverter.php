@@ -28,6 +28,11 @@ class LinkConverter extends BaseConverter {
 			return $text;
 		}
 
+		// If the text is the same as the link, return the link.
+		if ( $href === $text ) {
+			return $href;
+		}
+
 		if ( $this->formattingToMarkdown() ) {
 			$href = $this->escapeMarkdownChars( $href, '', [ ')', '\\' ] );
 			return sprintf( '[%1$s](%2$s)', $text, $href );
@@ -54,7 +59,7 @@ class LinkConverter extends BaseConverter {
 	 */
 	private function getLinkInfo( ElementInterface $element ) {
 		$href = trim( $element->getAttribute( 'href' ) );
-		$text = trim( $element->getValue(), "\t\n\r\0\x0B" );
+		$text = trim( $element->getValue() );
 
 		return [ $href, $text ];
 	}
