@@ -4,58 +4,57 @@
  *
  * @package WPTelegram\FormatText
  *
- * @phpcs:disable Squiz.Commenting.ClassComment,Squiz.Commenting.FunctionComment
+ * @phpcs:disable Squiz.Commenting.ClassComment,Squiz.Commenting.FunctionComment, PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket,PEAR.Functions.FunctionCallSignature.MultipleArguments,PEAR.Functions.FunctionCallSignature.CloseBracketLine
  */
 
 namespace WPTelegram\FormatText\Tests;
 
-use PHPUnit\Framework\TestCase;
 use WPTelegram\FormatText\HtmlConverter;
 
 require_once __DIR__ . '/Utils.php';
 
-final class HtmlConverterTest extends TestCase {
+it( 'creates an instance without any options', function () {
 
-	public function testCanBeCreatedWithoutOptions() {
-		$this->assertInstanceOf(
-			HtmlConverter::class,
-			new HtmlConverter()
-		);
-	}
+	$this->assertInstanceOf(
+		HtmlConverter::class,
+		new HtmlConverter()
+	);
+} );
 
-	public function testWhitespaceReturnsEmptyString() {
-		$whitespace = " \t\n ";
-		$this->assertEquals(
-			'',
-			( new HtmlConverter() )->convert( $whitespace )
-		);
-	}
+it( 'converts whitespace to empty string', function () {
+	$whitespace = " \t\n ";
+	$this->assertEquals(
+		'',
+		( new HtmlConverter() )->convert( $whitespace )
+	);
+} );
 
-	public function testPlainTextReturnsAsIs() {
-		$text = 'Hello World!';
-		$this->assertEquals(
-			$text,
-			( new HtmlConverter() )->convert( $text )
-		);
-	}
+it( 'returns the plain text as is', function () {
+	$text = 'Hello World!';
+	$this->assertEquals(
+		$text,
+		( new HtmlConverter() )->convert( $text )
+	);
+} );
 
-	public function testWithInputFiles() {
-		$files = Utils::getInputFiles();
 
-		foreach ( $files as $file ) {
-			$input = file_get_contents( $file );
+$files = Utils::getInputFiles();
 
-			foreach ( Utils::FORMATS as $format ) {
+foreach ( $files as $file ) {
+	$input = file_get_contents( $file );
 
-				$output_path = Utils::getTestOutputPath( $file, $format );
+	foreach ( Utils::FORMATS as $format ) {
+		$output_path = Utils::getTestOutputPath( $file, $format );
 
-				$expected = file_get_contents( $output_path );
+		$description = sprintf( 'converts %s to %s', basename( $file ), basename( $output_path ) );
 
-				$this->assertEquals(
-					$expected,
-					( new HtmlConverter( [ 'format_to' => $format ] ) )->convert( $input )
-				);
-			}
-		}
+		it( $description, function () use ( $input, $format, $output_path ) {
+			$expected = file_get_contents( $output_path );
+
+			$this->assertEquals(
+				$expected,
+				( new HtmlConverter( [ 'format_to' => $format ] ) )->convert( $input )
+			);
+		} );
 	}
 }

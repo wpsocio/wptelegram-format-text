@@ -31,3 +31,6 @@ Thumbs.db
 # Composer
 vendor/
 contributors.md
+
+.phpunit.result.cache
+.phpunit.cache

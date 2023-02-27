@@ -4,9 +4,9 @@
 	"license": "MIT",
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^2.3",
-		"phpunit/phpunit": "^9.1",
 		"squizlabs/php_codesniffer": "^3.7",
-		"z4kn4fein/php-semver": "^2.0"
+		"z4kn4fein/php-semver": "^2.0",
+		"pestphp/pest": "^1.22"
 	},
 	"autoload": {
 		"psr-4": {
@@ -17,11 +17,16 @@
 		"lint": "\"vendor/bin/phpcs\" --standard=phpcs.xml .",
 		"lint:fix": "\"vendor/bin/phpcbf\" --standard=phpcs.xml .",
 		"lint:skip-warnings": "\"vendor/bin/phpcs\" --standard=phpcs.xml -n .",
-		"test": "\"vendor/bin/phpunit\" tests/",
+		"test": "\"vendor/bin/pest\"",
 		"release:major": "composer run-script release -- --type=major",
 		"release:minor": "composer run-script release -- --type=minor",
 		"release:patch": "composer run-script release -- --type=patch",
 		"release": "@php bin/release.php",
 		"snapshots": "@php bin/snapshots.php"
+	},
+	"config": {
+		"allow-plugins": {
+			"pestphp/pest-plugin": true
+		}
 	}
 }
