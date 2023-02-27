@@ -163,4 +163,14 @@ interface ElementInterface {
 	 * @return boolean
 	 */
 	public function isVoid();
+
+	/**
+	 * Whether the element is the same as the given element.
+	 *
+	 * @param ElementInterface $element The element to compare.
+	 *
+	 * @return boolean
+	 */
+	public function equals( ElementInterface $element );
+
 }

@@ -19,23 +19,21 @@ class ImageConverter extends BaseConverter {
 	 */
 	public function convert( ElementInterface $element ) {
 
-		list( $src, $text ) = $this->getImageInfo( $element );
+		list($src, $text ) = $this->getImageInfo( $element );
 
-		if ( $element->isDescendantOf( [ 'a' ] ) ) {
+		$this->isOnlyChildOfLink( $element );
+
+		// If the image is inside a link, return the image text if present
+		if ( $element->isDescendantOf( [ 'a' ] ) && $text ) {
 			return $text;
 		}
 
-		if ( $this->formattingToMarkdown() ) {
-			$src = $this->escapeMarkdownChars( $src, '', [ ')', '\\' ] );
-			return sprintf( '[%1$s](%2$s)', $text, $src );
+		// If the image is the only child of the parent link, return the image lint.
+		if ( $this->isOnlyChildOfLink( $element ) ) {
+			return $src;
 		}
 
-		if ( $this->formattingToHtml() ) {
-			$src = str_replace( '"', rawurlencode( '"' ), $src );
-			return sprintf( '<a href="%1$s">%2$s</a>', $src, $text );
-		}
-
-		return $text;
+		return '';
 	}
 
 	/**
@@ -51,9 +49,31 @@ class ImageConverter extends BaseConverter {
 		$title = trim( $element->getAttribute( 'title' ) );
 
 		$text = $title ? $title : $alt;
-		$text = $text ? $text : $src;
 
 		return [ $src, $text ];
+	}
+
+	/**
+	 * Whether the image is the only child of the parent link.
+	 *
+	 * @param ElementInterface $element The element.
+	 *
+	 * @return boolean
+	 */
+	private function isOnlyChildOfLink( ElementInterface $element ) {
+		$parent = $element->getParent();
+
+		if ( $parent && 'a' === $parent->getTagName() ) {
+			$children = $parent->getChildren();
+
+			foreach ( $children as $child ) {
+				if ( ! $child->isWhitespace() && ! $child->equals( $element ) ) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	/**
