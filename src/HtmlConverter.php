@@ -304,7 +304,7 @@ class HtmlConverter implements HtmlConverterInterface {
 	 * @return boolean Whether the element should be converted.
 	 */
 	public function shouldConvert( ElementInterface $element ) {
-		$shouldConvert = (bool) $element->getValue();
+		$shouldConvert = (bool) $element->getValue() || $element->isVoid();
 
 		$elementsToRemove = $this->getConfig()->getOption( 'elements_to_remove', [] );
 
