@@ -187,7 +187,7 @@ class HtmlConverter implements HtmlConverterInterface {
 		// remove <head>, <script> and <style> tags.
 		$html = preg_replace( '@<(head|script|style)[^>]*?>.*?</\\1>@si', '', $html );
 		// Convert <br> to \n.
-		$html = preg_replace( '@<br[^>]*?/?>@si', "\n", $html );
+		$html = preg_replace( '@[\n\t\s]*<br[^>]*?/?>[\n\t\s]*@si', "\n", $html );
 
 		return trim( $html );
 	}
