@@ -149,7 +149,7 @@ abstract class BaseConverter implements ConverterInterface {
 		}
 
 		if ( $element->isBlock() ) {
-			$value = "\n" . $value . "\n";
+			$value = "\n" . trim( $value ) . "\n";
 		}
 
 		if ( $this->formattingToText() ) {
