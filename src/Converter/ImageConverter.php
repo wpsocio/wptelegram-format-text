@@ -18,18 +18,20 @@ class ImageConverter extends BaseConverter {
 	 * {@inheritdoc}
 	 */
 	public function convert( ElementInterface $element ) {
+		$imagesInLinks = $this->config->getOption( 'images_in_links', [] );
+
+		$retainTitleOrAlt    = isset( $imagesInLinks['title_or_alt'] ) && 'retain' === $imagesInLinks['title_or_alt'];
+		$retainLoneImageLink = isset( $imagesInLinks['lone_image_link'] ) && 'retain' === $imagesInLinks['lone_image_link'];
 
 		list($src, $text ) = $this->getImageInfo( $element );
 
-		$this->isOnlyChildOfLink( $element );
-
 		// If the image is inside a link, return the image text if present
-		if ( $element->isDescendantOf( [ 'a' ] ) && $text ) {
+		if ( $retainTitleOrAlt && $element->isDescendantOf( [ 'a' ] ) && $text ) {
 			return $text;
 		}
 
 		// If the image is the only child of the parent link, return the image lint.
-		if ( $this->isOnlyChildOfLink( $element ) ) {
+		if ( $retainLoneImageLink && $this->isOnlyChildOfLink( $element ) ) {
 			return $src;
 		}
 
