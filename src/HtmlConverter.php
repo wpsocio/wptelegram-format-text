@@ -51,6 +51,13 @@ class HtmlConverter implements HtmlConverterInterface {
 				'elipsis'             => '…',
 				// Set to 'HTML', 'Markdown' or 'MarkdownV2'.
 				'format_to'           => 'text',
+				// Images inside links are processed as per these options.
+				'images_in_links'     => [
+					// Set to 'retain' to retain the image title or alt text.
+					'title_or_alt'    => 'skip',
+					// Set to 'retain' to retain the image link when the image is the only child of the link.
+					'lone_image_link' => 'skip',
+				],
 				// Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'.
 				'list_item_style'     => '-',
 				// Set to 'preserve' to preserve relative links.
