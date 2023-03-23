@@ -64,8 +64,6 @@ class HtmlConverter implements HtmlConverterInterface {
 				'relative_links'      => 'clean',
 				// Set to false to keep display:none elements.
 				'remove_display_none' => true,
-				// Set to false to remove hyperlinks being added in parentheses when formatting to 'text'.
-				'retain_hyperlinks'   => true,
 				// A callable to determine if a node should be converted.
 				'should_convert_cb'   => null,
 				// `list_item_style` for nested <ul> and <ol>.
@@ -76,6 +74,8 @@ class HtmlConverter implements HtmlConverterInterface {
 				'table_cell_sep'      => ' | ',
 				// Set the default separator for each <tr>.
 				'table_row_sep'       => "\n" . str_repeat( '-', 20 ) . "\n",
+				// Set to 'strip' to remove hyperlinks being added in parentheses when formatting to 'text'.
+				'text_hyperlinks'     => 'retain',
 				// Whether to throw an exception when document parsing fails.
 				'throw_on_doc_error'  => false,
 			];
