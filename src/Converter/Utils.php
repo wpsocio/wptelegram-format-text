@@ -227,4 +227,16 @@ class Utils {
 			$nodeList = $xpath->query( $expression );
 		}
 	}
+
+	/**
+	 * Prepare a string for use as a regular expression replacement.
+	 * It escapes the "$" and "\" characters to avoid it being interpreted as a backreference.
+	 * 
+	 * @param string $text The text to prepare.
+	 * 
+	 * @return string
+	 */
+	public static function preparePregReplacement( $text ) {
+		return addcslashes( $text, '\\$' );
+	}
 }
