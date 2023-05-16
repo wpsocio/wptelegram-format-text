@@ -231,12 +231,12 @@ class Utils {
 	/**
 	 * Prepare a string for use as a regular expression replacement.
 	 * It escapes the "$" and "\" characters to avoid it being interpreted as a backreference.
-	 * 
+	 *
 	 * @param string $text The text to prepare.
-	 * 
+	 *
 	 * @return string
 	 */
-	public static function preparePregReplacement( $text ) {
+	public static function preparePregReplacement( string $text ) {
 		return addcslashes( $text, '\\$' );
 	}
 }
