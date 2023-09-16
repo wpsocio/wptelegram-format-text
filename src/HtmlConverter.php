@@ -173,7 +173,6 @@ class HtmlConverter implements HtmlConverterInterface {
 		$result = trim( $this->convertChildren( $rootElement ) ) . $elipsis;
 
 		return $result;
-
 	}
 
 	/**

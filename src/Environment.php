@@ -98,7 +98,7 @@ final class Environment {
 	 * @return Environment
 	 */
 	public static function createDefaultEnvironment( array $config = [] ) {
-		$environment = new static( $config );
+		$environment = new self( $config );
 
 		$environment->addConverter( new CodeConverter() );
 		$environment->addConverter( new CommentConverter() );
