@@ -10,7 +10,7 @@
 	<!-- Exclude the Composer Vendor directory. -->
 	<exclude-pattern>/vendor/*</exclude-pattern>
 
-	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
+	<config name="installed_paths" value="../../phpcsstandards/phpcsextra,../../phpcsstandards/phpcsutils,../../wp-coding-standards/wpcs"/>
 
 	<!-- Load WordPress Coding standards -->
 	<rule ref="WordPress-Extra" />
@@ -21,7 +21,7 @@
 		<exclude name="WordPress.Files.FileName" />
 
 		<!-- Disable short array syntax warning -->
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
 
 		<!-- Disable snake case rule for variable names -->
 		<exclude name="WordPress.NamingConventions.ValidVariableName" />
@@ -34,6 +34,9 @@
 
 		<!-- Disable escaping output -->
 		<exclude name="WordPress.Security.EscapeOutput" />
+
+		<!-- Disable NoReservedKeywordParameterNames warning -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames" />
 	</rule>
 
 	<!-- Disallow Long Array Syntax -->
