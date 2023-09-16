@@ -34,6 +34,9 @@
 
 		<!-- Disable escaping output -->
 		<exclude name="WordPress.Security.EscapeOutput" />
+
+		<!-- Disable NoReservedKeywordParameterNames warning -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames" />
 	</rule>
 
 	<!-- Disallow Long Array Syntax -->
