@@ -3,7 +3,7 @@
 	"description": "HTML to Text converter/formatter for Telegram Bot API",
 	"license": "MIT",
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^3.0",
+		"wp-coding-standards/wpcs": "^3.0.1",
 		"squizlabs/php_codesniffer": "^3.7",
 		"z4kn4fein/php-semver": "^2.0",
 		"pestphp/pest": "^1.22"
