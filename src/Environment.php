@@ -7,6 +7,7 @@
 
 namespace WPTelegram\FormatText;
 
+use WPTelegram\FormatText\Converter\BlockquoteConverter;
 use WPTelegram\FormatText\Converter\CodeConverter;
 use WPTelegram\FormatText\Converter\CommentConverter;
 use WPTelegram\FormatText\Converter\ConverterInterface;
@@ -112,6 +113,7 @@ final class Environment {
 		$environment->addConverter( new SpoilerConverter() );
 		$environment->addConverter( new TableConverter() );
 		$environment->addConverter( new TextConverter() );
+		$environment->addConverter( new BlockquoteConverter() );
 
 		return $environment;
 	}
