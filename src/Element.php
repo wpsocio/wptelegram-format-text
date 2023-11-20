@@ -19,7 +19,6 @@ class Element implements ElementInterface {
 	const BLOCK_ELEMENTS = [
 		'article',
 		'aside',
-		'blockquote',
 		'body',
 		'div',
 		'footer',
