@@ -5,7 +5,7 @@ HTML to Text converter/formatter for [Telegram Bot API](https://core.telegram.or
 Inspired by [thephpleague/html-to-markdown](https://github.com/thephpleague/html-to-markdown).
 
 # Abandonned!
-Please use [wpsocio/wptelegram-format-text](https://github.com/wpsocio/wptelegram-format-text)
+Please use [wpsocio/telegram-format-text](https://github.com/wpsocio/telegram-format-text)
 
 ## Usage
 
